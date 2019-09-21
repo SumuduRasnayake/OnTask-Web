@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import LoadingComponent from '../components/LoadingComponent'
+import LoadingComponent from '../components/LoadingComponent/LoadingComponent'
 import axios from "axios";
 
 export default function requireAuth(WrappedComponent) {

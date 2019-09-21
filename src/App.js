@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import axios from 'axios'
-import LoadingComponent from './components/LoadingComponent'
+import LoadingComponent from './components/LoadingComponent/LoadingComponent'
 import './App.scss';
 
 // Containers
