@@ -20,7 +20,6 @@ class Login extends Component{
     axios
     .get("/auth/user/me")
     .then(res => {
-      console.log(res);
       alert("You are already logged as "+res.data.fname + ". Try logout first")
       this.props.history.push("/")
     })
