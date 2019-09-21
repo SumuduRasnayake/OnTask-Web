@@ -152,16 +152,16 @@ class DefaultHeader extends Component {
           </NavItem>
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle nav>
-              {this.state.propic ? (
+              {this.state.propic.propicURL ? (
                 <img
-                  src={this.state.propic}
+                  src={this.state.propic.propicURL}
                   className="img-avatar"
                   width="30"
                   height="30"
                   alt=""
                 />
               ) : (
-                <i className="fa fa-user" style={{ fontSize: "25px" }} />
+                <img className="img-avatar" src={"https://www.gravatar.com/avatar/"+this.state.propic.emailHash+"?d=retro&s=50"} alt=""/>
               )}
             </DropdownToggle>
             <DropdownMenu right={true}>

@@ -6,13 +6,12 @@ import SENDER from "../../utils/SENDER";
 const ProfilePicture = props => {
     const uploader = useRef(null);
   const [on, setOn] = useState(true);
-  const [propic, setPropic] = useState(null);
+  const [propic, setPropic] = useState([]);
   const showOv = () => {
     setOn(!on);
   };
 
     function fileChangedHandler(event) {
-        console.log(event.target.files[0]);
         let formData = new FormData();
         formData.append("file", event.target.files[0]);
         formData.append("name", event.target.files[0].name.replace(/(|)/g,"_"));
@@ -23,11 +22,10 @@ const ProfilePicture = props => {
         )
           .then(res => {
             if (res.status === 200) {
-              //alert("Propic suc");
               setOn(!on)
             }
           })
-          .catch(err => alert("err"));
+          .catch(err => console.log(err));
       }
 
       const showOpenFileDlg = () => {
@@ -37,25 +35,25 @@ const ProfilePicture = props => {
     useEffect(() => {
         SENDER.get("/user/" + props.id + "/pro-pic").then(
           res => {
-            console.log(res.data);
+            console.table([res.data])
             setPropic(res.data);
           }
         );
-      });
+      },[props.id]);
 
 
     return (
         <div className="pro_pic_container" >
         <div        
-          style={{ borderRadius: "50%" }}>
+          style={{ borderRadius: "50%",textAlign: "center" }}>
         {
-          propic ? <img
-          src={propic}
+          propic && propic.propicURL ? <img
+          src={propic.propicURL}
           onMouseEnter={showOv}
           className="pro_pic"
           alt=""
           style={{ borderRadius: "10px",height: "40vh",width: "100%"}}
-        />:<i className="fa fa-user" style={{marginLeft: "9%",fontSize: "220px"}}></i>
+        />: <img src={"https://www.gravatar.com/avatar/"+propic.emailHash+"?d=retro&s=214"} alt=""/>
         }
         </div>
         <div className="pro_pic_update_btn" style={{display: localStorage.getItem('id') === props.id ? "block" : "none"}}>
