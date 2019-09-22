@@ -16,7 +16,7 @@ const propTypes = {
 
 const defaultProps = {};
 
-class DefaultAside extends Component {
+class ProfilePane extends Component {
 
   constructor(props) {
     super(props);
@@ -72,15 +72,7 @@ class DefaultAside extends Component {
               Profile
             </NavLink>
           </NavItem>
-          {/* <NavItem>
-            <NavLink className={classNames({ active: this.state.activeTab === '2' })}
-                     onClick={() => {
-                       this.toggle('2');
-                     }}>
-              oooppppp-[pp] <i className="icon-speech"></i> 
-              Activity
-            </NavLink>
-          </NavItem> */}
+       
           <NavItem>
             <NavLink style={{display: this.state.editEnabled ? "block" : "none"}} className={classNames({ active: this.state.activeTab === '3' })}
                      onClick={() => {
@@ -151,7 +143,7 @@ class DefaultAside extends Component {
   }
 }
 
-DefaultAside.propTypes = propTypes;
-DefaultAside.defaultProps = defaultProps;
+ProfilePane.propTypes = propTypes;
+ProfilePane.defaultProps = defaultProps;
 
-export default DefaultAside;
+export default ProfilePane;

@@ -23,14 +23,14 @@ const UserProfile = props => {
               setLName(res.data.lname ? res.data.lname: "")  
             });
 
-            SENDER.get('/users/'+localStorage.getItem('id')+'/education').then(
+            SENDER.get('/users/'+props.id+'/education').then(
               res => {
                 console.log("Education: ")
                 console.log(res.data)
                 setEducation(res.data)
               })
 
-              SENDER.get('/users/'+localStorage.getItem('id')+'/work').then(
+              SENDER.get('/users/'+props.id+'/work').then(
                 res => {
                   console.log("Work: ")
                   console.log(res.data)
@@ -41,14 +41,16 @@ const UserProfile = props => {
   return (
     <>
       <Row>
-      <Col sm="3" md="3" xs="8" lg="3">
+      <Col sm="6" md="3" xs="10" lg="3">
       <ProfilePicture id={props.id}/>
       </Col>
-      <Col sm="4" lg="5" className="middle_column">
-      <h3>{userData.fname + " "+lname}</h3>
-      {userData.bio ? userData.bio : <h6>Your <i>About me</i> is empty</h6>}
+      <Col  sm="12" md="9" xs="12" lg="9">
+        <Row>
+        <Col sm="6" lg="8" className="middle_column">
+      <h3>{(userData.fname ? userData.fname:"") + " "+ (lname ? lname :" ")}</h3>
+      {userData.bio ? userData.bio :  localStorage.getItem('id') === props.id ? <h6>Your <i>About me</i> is empty</h6> : ""}
       </Col>
-      <Col sm="5" lg="4">
+      <Col sm="6" lg="4">
           <div style={{display: "flex",flexDrection: "row"}}>
             <div></div>
             <div></div>
@@ -73,45 +75,56 @@ const UserProfile = props => {
               </div>
               <div style={{display: userData.githubLink ? "flex": "none",flexDirection: "row",alignItems: "center"}}>
               <Github size={15} />
-              <a href={userData.githubLink} style={{margin: "0.5%",marginLeft: "1.5%",color: "black"}}>{userData.githubLink}</a>
+              <a href={userData.githubLink} target="_blank" style={{margin: "0.5%",marginLeft: "1.5%",color: "black"}}>{userData.githubLink}</a>
               </div>
               <div style={{display:  userData.websiteLink ? "flex" : "none",flexDirection: "row",alignItems: "center"}}>
               <Link2 size={15} />
-              <a href={userData.websiteLink} style={{margin: "0.5%",marginLeft: "1.5%",color: "black"}}>{userData.websiteLink}</a>
+              <a href={userData.websiteLink} target="_blank" style={{margin: "0.5%",marginLeft: "1.5%",color: "black"}}>{userData.websiteLink}</a>
               </div>
               <div style={{display:  userData.linkedInLink ? "flex" : "none",flexDirection: "row",alignItems: "center"}}>
               <ScLinkedin size={25} />
-              <a href={userData.linkedInLink} style={{margin: "0.5%",marginLeft: "1.5%",color: "black"}}>{userData.linkedInLink}</a>
+              <a href={userData.linkedInLink} target="_blank" style={{margin: "0.5%",marginLeft: "1.5%",color: "black"}}>{userData.linkedInLink}</a>
               </div>
               </CardBody>
           </Card>
       </Col>
-    </Row>
-
-    <Card style={{padding: "1%",marginBottom: "1%",marginTop: "1%",display: "flex",backgroundColor: "#1FDC75",flexDirection: "row",alignItems: "center"}}>
+        </Row>
+        <Card style={{padding: "1%",marginBottom: "1%",marginTop: "1%",display: "flex",backgroundColor: "#1FDC75",flexDirection: "row",alignItems: "center"}}>
       <i className="fa fa-briefcase"></i>
       <h5>Work</h5>
       </Card>
-      {work.map( WItem => 
+      {work.length > 0 ? work.map( WItem => 
             <WorkItem 
               title={WItem.title}
               w_place={WItem.place}
               from={WItem.startDate}
               to={WItem.endDate}
               description={WItem.description}
-            />)}
+            />) :(
+              <Card style={{display: "flex",color: "gray",justifyContent: "center",height: "18vh",alignItems: "center"}}>
+                <h6>No workplaces to show</h6>
+            </Card>
+            ) }
 
     <Card style={{padding: "1%",marginBottom: "1%",display: "flex",backgroundColor: "#1FDC75",flexDirection: "row",alignItems: "center"}}>
         <i className="fa fa-graduation-cap"></i>
           <h5>Education</h5>
         </Card>
-        {education.map( EduItem => 
+        { education.length > 0 ? education.map( EduItem => 
             <EducationItem 
               institute={EduItem.institute}
               from={EduItem.startDate}
               to={EduItem.endDate}
               description={EduItem.description}
-            />)}
+            />): (
+              <Card style={{display: "flex",color: "gray",justifyContent: "center",height: "18vh",alignItems: "center"}}>
+              <h6>No Education to show</h6>
+          </Card>
+            )}
+      </Col>
+    </Row>
+
+
     </>
   );
 };

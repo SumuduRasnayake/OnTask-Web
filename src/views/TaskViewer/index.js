@@ -4,6 +4,7 @@ import { withRouter} from 'react-router-dom'
 import TaskAsignee from "../../components/TaskAsignee";
 import TaskDiscussion from "../../components/TaskDiscussion";
 import SubTasks from "../../components/SubTasks";
+import TaskActivity from "../../components/TaskActivity"
 import SENDER from "../../utils/SENDER";
 import { Clock } from "styled-icons/feather/Clock";
 import TaskResItem from "../../components/TaskResItem";
@@ -107,7 +108,7 @@ const TaskViewer = props => {
   }
 
   useEffect(() => {
-    if (props.id) {
+    if (props.taskId) {
       console.log("id tv: " + props.taskId);
       setShow(true);
     }
@@ -127,7 +128,7 @@ const TaskViewer = props => {
       .catch(err => console.log(err));
     
     
-  }, [props.id,p]);
+  }, [props.taskId,p]);
 
   return (
     <>
@@ -168,6 +169,14 @@ const TaskViewer = props => {
             <Col xs="12" sm="12" lg="3">
             <Card>
                 <CardBody>
+                <i
+                      className="fa fa-edit float-right"
+                      title="Edit"
+                      style={{
+                        cursor: "pointer",
+                        display: props.isAdmin ? "block" : "none",
+                      }}
+                    />
                   <div style={{ display: "flex", flexDirection: "row" }}>
                     <Clock size={20} />
                     <h6 style={{ marginLeft: "1%" }}>
@@ -186,6 +195,10 @@ const TaskViewer = props => {
                       {task.isCompleted ? "Mark as not completed" : "Mark as completed"} 
                     </h6>
                   </div>
+                  <div style={{display: "flex",flexDirection: "column"}}>
+                <h6>{percentage}% completed</h6>
+                <Progress className="progress-xs mt-2" color="success" value={percentage} />
+                </div>
                 </CardBody>
               </Card>
               <Card>
@@ -207,6 +220,7 @@ const TaskViewer = props => {
                   </div>
                 </CardHeader>
                 <CardBody style={{ padding: 0 }}>
+                  {props.isAssigned ? "haha" : "hehe"}
                   {resources.map(resource => {
                     return (
                       <TaskResItem
@@ -220,7 +234,7 @@ const TaskViewer = props => {
                 </CardBody>
               </Card>
               
-              <TaskAsignee isAdmin={props.isAdmin} taskId={props.id} groupId={props.groupId}/>
+              <TaskAsignee isAdmin={props.isAdmin} taskId={props.taskId} groupId={props.groupId}/>
             </Col>
             <Col xs="12" sm="12" lg="5" style={{ padding: 0 }}>
               <Card>
@@ -261,16 +275,11 @@ const TaskViewer = props => {
                   </div>
                 </CardBody>
               </Card>
-              <SubTasks isAdmin={props.isAdmin} taskId={props.id} sendSubTaskStats={getSubTaskStats}/>
+              <TaskActivity taskId={props.taskId}/>
             </Col>
             <Col xs="12" sm="12" lg="4">
-            <Card className="border-light" style={{marginBottom: 0}}>
-                <CardBody style={{display: "flex",flexDirection: "column"}}>
-                <h5>{percentage}% completed</h5>
-                <Progress className="progress-xs mt-2" color="success" value={percentage} />
-                </CardBody>
-              </Card>
-            <TaskDiscussion taskId={props.id} />
+            <SubTasks isAdmin={props.isAdmin} taskId={props.taskId} sendSubTaskStats={getSubTaskStats}/> 
+            <TaskDiscussion taskId={props.taskId} />
             </Col>
           </Row>
         </Modal.Body>
