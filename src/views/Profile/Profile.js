@@ -39,7 +39,11 @@ class Profile extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      
+      SENDER.get("/users/" + this.props.match.params.id).then(res => {
+        this.setState({userData: res.data});
+      });
+  
+      this.setState({lname: this.state.userData.lname ? this.state.userData.lname: ""})  
     }
   }
 
@@ -53,20 +57,12 @@ class Profile extends Component {
     return (
       <Row style={{ marginTop: "0.5%" }}>
       
-      <Col xs="12" sm="12" lg="9" style={{paddingRight: 0}}>
-      <Card>
+      <Col xs="12" sm="12" lg="12" style={{paddingRight: 0}}>
+      <Card style={{minHeight: "88vh"}}>
           <CardBody>
             <ProfilePane id={this.props.match.params.id}/>
           </CardBody>
         </Card>
-      </Col>
-      <Col xs="12" sm="12" lg="3">
-      <Card style={{marginTop: "1%",padding: "1%",display: "flex",backgroundColor: "#1FDC75",flexDirection: "row",alignItems: "center"}}>
-        <Activity size={25}/>
-          <h5>User Activity</h5>
-        </Card>
-        
-      
       </Col>
       </Row>  
     );

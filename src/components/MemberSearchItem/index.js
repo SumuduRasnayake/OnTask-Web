@@ -5,7 +5,8 @@ class MemberSearchItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        selected: false
+        selected: false,
+        isDisabled: false
     }
   }
 
@@ -42,14 +43,18 @@ class MemberSearchItem extends Component {
             src={this.props.data.propicURL}
             alt=""
           /> :
-          <i className="fa fa-user" style={{fontSize: "25px"}}></i>
+          <img className="img-avatar" src={"https://www.gravatar.com/avatar/"+this.props.data.emailHash+"?d=retro&s=25"} alt=""/>
           }
           <div style={{ marginLeft: "1%" }}>{this.props.name} </div>
         </ListGroupItem>
         <div style={{ flexGrow: 1 }} />
          {this.props.selected ? "" : <Button
             color="success"
-            onClick={() => this.props.selectMember(this.props.data)}
+            disabled={this.state.isDisabled}
+            onClick={() => {
+              this.setState({isDisabled: true})
+              this.props.selectMember(this.props.data)
+            }}
             style={{marginLeft: "1%"}}
           >
             Add

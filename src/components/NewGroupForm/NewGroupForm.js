@@ -27,7 +27,7 @@ class NewGroupModal extends React.Component {
     return (
       <>
 
-          <Button onClick={this.handleShow} variant="success">
+          <Button onClick={this.handleShow} style={{width: "42%"}}variant="success">
             New Group
           </Button>
 

@@ -9,9 +9,9 @@ const GroupItem = props => {
         <>
           <Link to={"/groups/"+props.groupId} style={{ textDecoration: 'none' }}>
           <Card style={{padding: "1%"}}>
-              <CardBody style={{padding: 0}}>
-                <h3 style={{textDecoration: 'none'}}>{props.groupName}</h3>
-                {htmlToReactParser.parse(props.last_activity)}
+              <CardBody style={{padding: "1%",color: "black"}}>
+                <h5 style={{textDecoration: 'none'}}>{props.groupName}</h5>
+                <span style={{color: "gray"}}>{htmlToReactParser.parse(props.last_activity)}</span>
               </CardBody>
             </Card>
           </Link>
