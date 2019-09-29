@@ -39,7 +39,7 @@ const ProfilePicture = props => {
             setPropic(res.data);
           }
         );
-      },[props.id]);
+      },[props.id,on]);
 
 
     return (

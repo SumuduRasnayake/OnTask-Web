@@ -180,7 +180,7 @@ class GroupInviteModal extends React.Component {
                     id={result.userId}
                     data={result}
                     selectMember={this.addMember}
-                    name={result.fname + "" + lname}
+                    name={result.fname + " " + lname}
                   />
                 );
               })}
