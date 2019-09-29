@@ -16,14 +16,12 @@ const SubTasks = props => {
     function handleChange(e){
       SENDER.get('/member/'+groupId+"/search/"+e.target.value).then(
         res => {
-          console.log(res.data)
           setSearchResults(res.data)
         }
       ).catch(err => console.log(err))
     }
 
     function addAsignee(data){
-      console.log("addd")
       const newSR = searchResults.filter(function(value, index, arr){
 
         return value !== data;
@@ -41,7 +39,6 @@ const SubTasks = props => {
         }).catch(err => console.log(err))
     setSearchResults(newSR)
     setTrig(!trig)
-    console.log(newSR)
         }
 
     function onRemove(){
@@ -94,11 +91,11 @@ const SubTasks = props => {
                       const lname = asignee.lname ? asignee.lname : ""
                       return <TaskAsigneeItem 
                         key={asignee.userId}
-                        id={asignee.userId}
+                        userId={asignee.userId}
                         taskId={props.taskId}
                         propic={asignee.propic}
                         onRemove={onRemove}
-                        name={asignee.fname+""+lname}
+                        name={asignee.fname+" "+lname}
                       />
                     }): <h6 style={{textAlign: "center",color: "gray",paddingTop: "2%"}}>No asignees</h6>}
                   </ListGroup>

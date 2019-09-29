@@ -4,8 +4,6 @@ import SENDER from "../../utils/SENDER";
 import { Input, Button } from "reactstrap";
 import Tab from "react-bootstrap/Tab";
 import ReactMarkdown from "react-markdown";
-import "emoji-mart/css/emoji-mart.css";
-import { Picker } from "emoji-mart";
 
 const CommentBox = props => {
   const [input, setInput] = useState("");
@@ -16,7 +14,6 @@ const CommentBox = props => {
   }
 
   function postComment(event) {
-    setInput("");
     event.preventDefault();
     SENDER.post("/comments", {
       taskId: props.taskId,
@@ -25,9 +22,8 @@ const CommentBox = props => {
     })
       .then(res => {
         if (res.status === 200) {
-          //alert("New comment Added")
+          
         }
-        //props.onAdd()
       })
       .catch(err => console.log("Comment Error : " + err));
   }
@@ -44,7 +40,7 @@ const CommentBox = props => {
           />
         </Tab>
         <Tab eventKey="preview" title="Preview">
-          <ReactMarkdown source={input} />
+           <ReactMarkdown source={input} /> 
         </Tab>
       </Tabs>
       <div
@@ -60,24 +56,6 @@ const CommentBox = props => {
         </Button>
       </div>
 
-      <Picker
-        style={{
-          display: isShown ? "block" : "none",
-          height: "40vh",
-          marginTop: "1%",
-          overflowX: "hidden",
-          zIndex: 10
-        }}
-        emoji=""
-        showSkinTones={false}
-        showPreview={false}
-        title=""
-        set="facebook"
-        onSelect={emoji => {
-          console.log(emoji);
-          setInput(input+emoji.native)
-        }}
-      />
     </>
   );
 };

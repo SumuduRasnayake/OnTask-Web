@@ -12,16 +12,12 @@ const SubTasks = props => {
     const [subtasks,setSubtasks] = useState([])
 
     function createSubtask(){
-      console.log({
-        name: values.name,
-        taskId: props.taskId
-      })
       SENDER.post('/subtasks',{
+        addedBy: localStorage.getItem('id'),
         taskId: props.taskId,
         name: values.name
       }).then(res => {
         if(res.status === 200){
-          alert("New Subtask added")
           setIsExpanded(false)
           setTrig(!trig)
         }
@@ -37,8 +33,6 @@ const SubTasks = props => {
         SENDER.get('/subtasks/task/'+props.taskId).then(
           res => {
             let i=0; 
-            console.log("subtasks: ")
-            console.log(res.data)
             setSubtasks(res.data)
             i = res.data.filter( subtask => subtask.completed === true ).length
             props.sendSubTaskStats(i,res.data.length)

@@ -64,10 +64,6 @@ class GroupSettingsModal extends React.Component {
               <Input type="text" />
               <Button variant="danger" disabled={this.state.isNameMatched ? false : true} style={{marginTop: "1%"}}>Delete Group</Button>
             </Form.Group>
-
-            <Form.Group>
-              <label><b>Archive Group</b></label>
-            </Form.Group>
           </Modal.Body>
         </Modal>
       </>
