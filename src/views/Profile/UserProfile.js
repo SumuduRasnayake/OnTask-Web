@@ -101,7 +101,7 @@ const UserProfile = props => {
               to={WItem.endDate}
               description={WItem.description}
             />) :(
-              <Card style={{display: "flex",color: "gray",justifyContent: "center",height: "18vh",alignItems: "center"}}>
+              <Card style={{display: "flex",color: "gray",justifyContent: "center",height: "10vh",alignItems: "center"}}>
                 <h6>No workplaces to show</h6>
             </Card>
             ) }
@@ -117,7 +117,7 @@ const UserProfile = props => {
               to={EduItem.endDate}
               description={EduItem.description}
             />): (
-              <Card style={{display: "flex",color: "gray",justifyContent: "center",height: "18vh",alignItems: "center"}}>
+              <Card style={{display: "flex",color: "gray",justifyContent: "center",height: "10vh",alignItems: "center"}}>
               <h6>No Education to show</h6>
           </Card>
             )}

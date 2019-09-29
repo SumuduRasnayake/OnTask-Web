@@ -58,7 +58,7 @@ class Profile extends Component {
       <Row style={{ marginTop: "0.5%" }}>
       
       <Col xs="12" sm="12" lg="12" style={{paddingRight: 0}}>
-      <Card style={{minHeight: "88vh"}}>
+      <Card style={{minHeight: "87vh",marginBottom: "1%",padding: "1%"}}>
           <CardBody>
             <ProfilePane id={this.props.match.params.id}/>
           </CardBody>
