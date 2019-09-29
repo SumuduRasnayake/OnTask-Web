@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import Modal from "react-bootstrap/Modal";
 import { withRouter} from 'react-router-dom'
+//import {Authenticate} from '../../utils/OutlookConfig'
 import TaskAsignee from "../../components/TaskAsignee";
 import TaskDiscussion from "../../components/TaskDiscussion";
 import SubTasks from "../../components/SubTasks";
-import TaskActivity from "../../components/TaskActivity"
+import TaskActivity from "./TaskActivity"
 import SENDER from "../../utils/SENDER";
 import { Clock } from "styled-icons/feather/Clock";
 import TaskResItem from "../../components/TaskResItem";
 import { File } from "styled-icons/boxicons-regular/File";
 import { Description } from "styled-icons/material/Description";
-import { Google } from 'styled-icons/boxicons-logos/Google'
+import { Microsoft } from 'styled-icons/boxicons-logos/Microsoft'
 import { Tick} from 'styled-icons/typicons/Tick'
 import "./taskviewer.css";
 import { Row, Col, Card, CardBody, CardHeader,Button,Progress,UncontrolledDropdown,
@@ -23,6 +24,7 @@ const TaskViewer = props => {
   const [subtaskTotal, setSubtaskTotal] = useState(1);
   const [percentage,setPercentage] = useState(0)
   const TaskResUploader = useRef(null);
+  //The following P is just used to refresh the UI.
   const [p, setP] = useState(true);
   const [description, setDescription] = useState("");
   const [task, setTask] = useState([]);
@@ -38,7 +40,6 @@ const TaskViewer = props => {
     if(window.confirm("All task data will be permanently deleted.Continue?")){
       SENDER.delete('/tasks/'+props.taskId).then(
         res => {
-          console.log(res.dta)
           alert("Task Deleted")
           window.location.reload()
         }
@@ -70,16 +71,16 @@ const TaskViewer = props => {
   function handleDesChange() {
     setDesEditable(false);
     SENDER.post("/tasks/edit-desc", {
+      editedBy: localStorage.getItem('id'),
       taskId: props.taskId,
       description: desc.current.innerText,
     })
-      .then(res => alert("Description Updated"))
+      .then(res => console.log("Description Updated"))
       .catch(err => alert("Error"));
   }
 
   const closeModal = () => {
     setShow(false);
-    window.location.reload();
   };
 
   const getSubTaskStats = (completed,total) => {
@@ -107,9 +108,10 @@ const TaskViewer = props => {
     .catch(err => console.log(err));
   }
 
+ 
+
   useEffect(() => {
-    if (props.taskId) {
-      console.log("id tv: " + props.taskId);
+    if (props.i) {
       setShow(true);
     }
 
@@ -128,7 +130,7 @@ const TaskViewer = props => {
       .catch(err => console.log(err));
     
     
-  }, [props.taskId,p]);
+  }, [props.i,p]);
 
   return (
     <>
@@ -178,15 +180,15 @@ const TaskViewer = props => {
                       }}
                     />
                   <div style={{ display: "flex", flexDirection: "row" }}>
-                    <Clock size={20} />
-                    <h6 style={{ marginLeft: "1%" }}>
+                    <Clock size={15} />
+                    <h6 style={{ marginLeft: "2.5%" }}>
                       <b>Due </b> {task.dueDate}
                     </h6>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "row" }}>
-                    <Google size={15} />
-                    <h6 style={{ marginLeft: "1%" }}>
-                      Add to Google tasks
+                  <div style={{ display: "flex", flexDirection: "row" }} onClick={() => {}}>
+                    <Microsoft size={15} />
+                    <h6 style={{ marginLeft: "2.5%" }}>
+                      Add to Outlook
                     </h6>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row" }}>
@@ -196,7 +198,6 @@ const TaskViewer = props => {
                     </h6>
                   </div>
                   <div style={{display: "flex",flexDirection: "column"}}>
-                <h6>{percentage}% completed</h6>
                 <Progress className="progress-xs mt-2" color="success" value={percentage} />
                 </div>
                 </CardBody>
@@ -224,6 +225,7 @@ const TaskViewer = props => {
                   {resources.map(resource => {
                     return (
                       <TaskResItem
+                        key={resource.taskResId}
                         src={resource.uri}
                         name={resource.uri.split("/")[5].replace(/%20/g, "_")}
                         addedBy={resource.username}
@@ -236,7 +238,7 @@ const TaskViewer = props => {
               
               <TaskAsignee isAdmin={props.isAdmin} taskId={props.taskId} groupId={props.groupId}/>
             </Col>
-            <Col xs="12" sm="12" lg="5" style={{ padding: 0 }}>
+            <Col xs="12" sm="12" lg="5" style={{  }}>
               <Card>
                 <CardHeader>
                   <Description size={20} />
@@ -257,6 +259,7 @@ const TaskViewer = props => {
                   <div
                     ref={desc}
                     contentEditable={desEditable}
+                    suppressContentEditableWarning={true}
                     style={{
                       border: desEditable ? "1px solid gray" : "none",
                       padding: "3%",
