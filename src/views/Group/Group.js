@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import pusher from "../../utils/PusherObject";
-import GroupActivityItem from "./components/GroupActivityItem";
+import GroupActivityItem from "../../components/ActivityItem";
 import RequireAuth from "../../utils/PrivateRoute";
 import GroupHeader from "./components/GroupHeader";
 import TaskItem from "../../components/TaskItem";
@@ -50,11 +50,14 @@ class Group extends Component {
 
   state = {
     trig: false,
+    i: 0,
     inviteLink: "",
     groupData: [],
     announcements: [],
     notices: [],
+    assignedTasks: [],
     groupActivities: [],
+    isSelectedTaskAssigned: false,
     tasks: [],
     admins: [],
     members: [],
@@ -132,6 +135,12 @@ class Group extends Component {
       })
       .catch(err => console.log(err));
 
+      SENDER.get("/user/" + localStorage.getItem("id") + "/tasks")
+      .then(res => {
+        this.setState({ assignedTasks: res.data });
+      })
+      .catch(err => console.log(err));
+
     SENDER.get("/notices/group/" + this.props.match.params.gid)
       .then(res => {
         this.setState({ notices: res.data });
@@ -149,8 +158,8 @@ class Group extends Component {
       .catch(err => console.log(err));
   }
 
-  getClickedTask = task => {
-    this.setState({ selectedTask: task });
+  getClickedTask = (task,isAssigned) => {
+    this.setState(prevState => ({ i: prevState.i+1,isSelectedTaskAssigned: isAssigned,selectedTask: task }));
   };
 
   updateTaskList = () => {
@@ -176,8 +185,18 @@ class Group extends Component {
           name={this.state.groupData.name}
           groupId={this.props.match.params.gid}
         />
-        <Row style={{ marginTop: "0.5%" }}>
-          <Col xs="12" sm="12" lg="3" style={{}}>
+        <Row>
+          <Col xs="12" sm="12" lg="3" style={{ marginTop: "0.5%" }}>
+          <Card style={{marginBottom: "2%"}}>
+              <CardBody style={{ display: "flex", flexDirection: "column" }}>
+                <h5>{this.state.percentage ? this.state.percentage : 0 }% completed</h5>
+                <Progress
+                  className="progress-xs mt-2"
+                  color="success"
+                  value={this.state.percentage}
+                />
+              </CardBody>
+            </Card>
             <Card className="border-light">
               <CardHeader>
                 <b>Tasks</b>
@@ -192,6 +211,8 @@ class Group extends Component {
               <CardBody style={{ backgroundColor: "#D6E0E3", padding: 0 }}>
                 {this.state.tasks.length > 0 ? (
                   this.state.tasks.map(task => {
+                    const isAssigned = this.state.assignedTasks.includes(task) 
+                    console.log("pavindu",isAssigned)
                     return (
                       <TaskItem
                         style={{
@@ -200,6 +221,7 @@ class Group extends Component {
                           margin: 0,
                         }}
                         key={task.id}
+                        isAssigned={isAssigned}
                         task={task}
                         sendTask={this.getClickedTask}
                       />
@@ -220,17 +242,18 @@ class Group extends Component {
                   this.state.selectedTask ? this.state.selectedTask.name : ""
                 }
                 groupId={this.props.match.params.gid}
-                id={this.state.selectedTask ? this.state.selectedTask.id : ""}
                 taskId={
                   this.state.selectedTask ? this.state.selectedTask.id : ""
                 }
+                i={this.state.i}
                 isAdmin={this.state.isAdmin}
+                isAssigned={this.state.isSelectedTaskAssigned}
                 group={this.state.groupData.name}
               />
             </Card>
           </Col>
 
-          <Col xs="12" sm="12" lg="4" style={{}}>
+          <Col xs="12" sm="12" lg="4" style={{ marginTop: "0.5%",paddingLeft: 0 }}>
             <Card style={{ margin: 0 }}>
               <CardHeader>
                 <b>Group Activity</b>
@@ -252,17 +275,7 @@ class Group extends Component {
             </Card>
           </Col>
 
-          <Col xs="12" sm="6" lg="3" style={{ paddingLeft: 0 }}>
-            <Card>
-              <CardBody style={{ display: "flex", flexDirection: "column" }}>
-                <h5>{this.state.percentage}% completed</h5>
-                <Progress
-                  className="progress-xs mt-2"
-                  color="success"
-                  value={this.state.percentage}
-                />
-              </CardBody>
-            </Card>
+          <Col xs="12" sm="6" lg="3" style={{marginTop: "0.5%", paddingLeft: 0 }}>
             <Card
               style={{
                 padding: "1%",
@@ -384,9 +397,13 @@ class Group extends Component {
                   const lname = admin.lname ? admin.lname : "";
                   return (
                     <MemberItem
-                      id={admin.userId}
+                      userId={admin.userId}
+                      groupId={this.props.match.params.gid}
+                      role="admin"
+                      isAdmin={this.state.isAdmin}
                       key={admin.fname}
                       img={admin.propicURL}
+                      emailHash={admin.emailHash}
                       name={admin.fname + " " + lname}
                     />
                   );
@@ -399,8 +416,12 @@ class Group extends Component {
                     const lname = member.lname ? member.lname : "";
                     return (
                       <MemberItem
-                        id={member.userId}
+                        userId={member.userId}
+                        groupId={this.props.match.params.gid}
+                        isAdmin={this.state.isAdmin}
+                        role="member"
                         key={member.fname}
+                        emailHash={member.emailHash}
                         img={member.propicURL}
                         name={member.fname + " " + lname}
                       />
