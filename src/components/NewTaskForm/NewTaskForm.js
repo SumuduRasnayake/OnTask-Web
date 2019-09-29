@@ -14,6 +14,7 @@ class NewTaskForm extends React.Component {
     this.state = {
       show: false,
       name: "",
+      isSubmitting: false,
       description: "",
       dueDate: "",
       startDate: new Date().toJSON().slice(0,10)
@@ -34,6 +35,7 @@ class NewTaskForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault()
+    this.setState({isSubmitting: true})
     SENDER.post('/tasks',{
       name: this.state.name,
       description: this.state.description,
@@ -45,12 +47,14 @@ class NewTaskForm extends React.Component {
       res => {
         if(res.status === 200){
           this.props.onAdd()
+          this.setState({isSubmitting: false})
           this.handleClose()
         }
       }
     ).catch(
       err => {
         alert("There was an error.Try again")
+        this.setState({isSubmitting: false})
         console.error(err)
       }
     )
@@ -93,7 +97,7 @@ class NewTaskForm extends React.Component {
             <a style={{color: "red",cursor: "pointer"}}onClick={this.handleClose}>
               Cancel
             </a>
-            <Button variant="success" type="submit">
+            <Button variant="success" disabled={this.state.isSubmitting} type="submit">
                 Create Task
               </Button>
           </Modal.Footer>
