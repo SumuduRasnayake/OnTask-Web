@@ -89,7 +89,12 @@ const UserProfile = props => {
           </Card>
       </Col>
         </Row>
-        <Card style={{padding: "1%",marginBottom: "1%",marginTop: "1%",display: "flex",backgroundColor: "#1FDC75",flexDirection: "row",alignItems: "center"}}>
+      </Col>
+    </Row>
+    <Row>
+      <Col sm="6" md="3" xs="10" lg="3"> </Col>
+      <Col  sm="12" md="9" xs="12" lg="9">
+                <Card style={{padding: "1%",marginBottom: "1%",marginTop: "1%",display: "flex",backgroundColor: "#1FDC75",flexDirection: "row",alignItems: "center"}}>
       <i className="fa fa-briefcase"></i>
       <h5>Work</h5>
       </Card>
@@ -123,8 +128,6 @@ const UserProfile = props => {
             )}
       </Col>
     </Row>
-
-
     </>
   );
 };

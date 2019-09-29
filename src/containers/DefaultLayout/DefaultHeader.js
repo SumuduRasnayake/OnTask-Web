@@ -17,7 +17,6 @@ import PropTypes from "prop-types";
 
 import { AppNavbarBrand } from "@coreui/react";
 import logo from "../../assets/img/brand/logo.svg";
-import sygnet from "../../assets/img/brand/sygnet.svg";
 
 const propTypes = {
   children: PropTypes.node,
@@ -29,7 +28,7 @@ class DefaultHeader extends Component {
   constructor(props) {
     super(props);
     var channel = pusher.subscribe("user_" + localStorage.getItem("id"));
-    channel.bind("group_add", this.updateNotifications);
+    channel.bind("user_notification", this.updateNotifications);
   }
 
   state = {
@@ -40,10 +39,12 @@ class DefaultHeader extends Component {
   };
 
   updateNotifications = data => {
+    console.log("data:",data)
     this.setState(prevState => ({
       noOfNotis: prevState.noOfNotis + 1,
       notifications: [...prevState.notifications, JSON.parse(data)],
     }));
+    console.log(this.state.notifications)
   };
 
   markNotificationAsSeen(id){
@@ -62,10 +63,6 @@ class DefaultHeader extends Component {
     await SENDER.get("/" + localStorage.getItem("id") + "/groups")
       .then(res => {
         this.setState({ groups: res.data });
-        res.data.map(group => {
-          var channel = pusher.subscribe("group_" + group.groupId);
-          channel.bind("new_activity", this.updateNotifications);
-        });
       })
       .catch(err => {
         console.log(err);
@@ -89,13 +86,7 @@ class DefaultHeader extends Component {
     return (
       <React.Fragment>
         <AppNavbarBrand
-          full={{ src: logo, width: 89, height: 45, alt: "OnTask" }}
-          minimized={{
-            src: sygnet,
-            width: 30,
-            height: 30,
-            alt: "CoreUI Logo",
-          }}
+          full={{ src: logo, width: 90, height: 45, alt: "OnTask" }}
           href="/dashboard"
         />
 
@@ -124,24 +115,26 @@ class DefaultHeader extends Component {
               })}
             </DropdownMenu>
           </UncontrolledDropdown>
+          
         </Nav>
-        <Nav className="ml-auto" navbar style={{ height: "3vh" }}>
+        <Nav className="ml-auto" navbar style={{  }}>
           <NewGroupForm />
           <NavItem>
             <UncontrolledDropdown>
               <DropdownToggle nav direction="down">
                 <i className="icon-bell" size="10" />
-                <Badge pill color="danger">
+                <Badge pill color="danger" style={{display: this.state.noOfNotis ? "block" : "none" }}>
                   {this.state.noOfNotis}
                 </Badge>
               </DropdownToggle>
               <DropdownMenu right={true}>
                 {this.state.notifications.length > 0 ? this.state.notifications.map(notification => {
+                  const n_id = notification.n_id ? notification.n_id : notification.id
                   return (
                     <UserNotification
-                      id={notification.id }
-                      key={notification.id }
-                      markAsSeen={() =>this.markNotificationAsSeen(notification.id)}
+                      id={notification.id || notification.n_id}
+                      key={notification.id || notification.n_id}
+                      markAsSeen={() =>this.markNotificationAsSeen(n_id)}
                       description={notification.description || notification.activity.description}
                       createdAt={notification.createdAt || notification.activity.createdAt}
                     />
