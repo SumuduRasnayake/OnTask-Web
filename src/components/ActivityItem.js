@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardBody } from "reactstrap";
+import moment from "moment";
 var HtmlToReactParser = require("html-to-react").Parser;
 
 const GroupActivityItem = props => {
@@ -18,7 +19,7 @@ const GroupActivityItem = props => {
           {htmlToReactParser.parse(props.description)}
         </h6>
         <p style={{ margin: 0 }}>
-          {createdDate} at {createdTime}
+          {moment(new Date(props.createdAt)).fromNow()}
         </p>
       </CardBody>
     </Card>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import RequireAuth from "../../utils/PrivateRoute";
+import FeedItem from './components/FeedItem'
 import TaskItem from "../../components/TaskItem";
 import pusher from "../../utils/PusherObject";
 import UserNotification from '../../containers/DefaultLayout/UserNotification'
@@ -76,11 +77,9 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="animated fadeIn" style={{ marginTop: "0.5%" }}>
+      <div className="animated fadeIn">
         <Row>
-          <Col xs="12" sm="12" lg="3" style={{}}>
-            <Card>
-              <CardBody style={{ paddingTop: "1%" }}>
+          <Col xs="12" sm="12" lg="3" style={{ marginTop: "0.5%" }}>
                 <h6>My Tasks</h6>
                 {this.state.assignedTasks.length > 0 ? this.state.assignedTasks.map(task => {
                   return (
@@ -103,16 +102,13 @@ class Dashboard extends Component {
                   taskId={this.state.selectedTask ? this.state.selectedTask.id : ""}
                   isAdmin={this.state.isAdmin}
                 />
-              </CardBody>
-            </Card>
           </Col>
 
-          <Col xs="12" sm="12" lg="5" style={{}}>
+          <Col xs="12" sm="12" lg="5">
             <div
               className="bg-success"
               style={{
                 paddingTop: "6%",
-                borderRadius: "5px",
                 paddingBottom: "0.5%",
                 marginBottom: "1%"
               }}
@@ -126,10 +122,10 @@ class Dashboard extends Component {
                return (
                  <Card style={{marginBottom: 0}}>
                    <CardBody style={{padding: "0.5%",paddingBottom: "2%"}}>
-                <UserNotification
+                <FeedItem
               id={feedItem.id }
               key={feedItem.id }
-              markAsSeen={() =>this.markNotificationAsSeen(feedItem.id)}
+              markAsSeen={() =>{}}
               description={feedItem.description || feedItem.activity.description}
               createdAt={feedItem.createdAt || feedItem.activity.createdAt}
             />
@@ -138,13 +134,7 @@ class Dashboard extends Component {
                )
               })}
           </Col>
-          <Col xs="12" sm="12" lg="4">
-            <Card
-              style={{
-                padding: 0
-              }}
-            >
-              <CardBody style={{ paddingTop: "1%" }}>
+          <Col xs="12" sm="12" lg="4" style={{ marginTop: "0.5%" }}>
                 <div
                   style={{
                     display: "flex",
@@ -181,8 +171,6 @@ class Dashboard extends Component {
                 ) : (
                   <p>No groups</p>
                 )}
-              </CardBody>
-            </Card>
           </Col>
         </Row>
       </div>
