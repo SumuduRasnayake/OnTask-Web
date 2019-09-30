@@ -17,6 +17,7 @@ import "./taskviewer.css";
 import { Row, Col, Card, CardBody, CardHeader,Button,Progress,UncontrolledDropdown,
   DropdownItem,
   DropdownMenu,
+  Input,
   DropdownToggle } from "reactstrap";
 
 const TaskViewer = props => {
@@ -24,12 +25,15 @@ const TaskViewer = props => {
   const [subtaskTotal, setSubtaskTotal] = useState(1);
   const [percentage,setPercentage] = useState(0)
   const TaskResUploader = useRef(null);
-  //The following P is just used to refresh the UI.
+
+  //The following P is just used to refresh the UI after uploding a file.
   const [p, setP] = useState(true);
+
   const [description, setDescription] = useState("");
   const [task, setTask] = useState([]);
   const [resources, setResources] = useState([]);
   const [desEditable, setDesEditable] = useState(false);
+  const [EditTaskInfo, setEditTaskInfo] = useState(false);
   const desc = useRef(null);
 
   const showOpenFileDlg = () => {
@@ -90,6 +94,22 @@ const TaskViewer = props => {
       setPercentage(value)
     }
   }
+
+  function editDueDate(e){
+    SENDER.post("/tasks/"+props.taskId+"/edit-due",{
+        editedBy: localStorage.getItem('id'),
+        date: e.target.value
+    }).then(
+      res => {
+        setP(!p)
+        setEditTaskInfo(false)
+      } 
+    ).
+    catch(
+      err => console.log(err)
+    )
+  }
+
 
   function toggleTaskCompletedStatus(){
     SENDER.post("/tasks/completed/" + localStorage.getItem('id') +"/"+props.taskId)
@@ -174,6 +194,7 @@ const TaskViewer = props => {
                 <i
                       className="fa fa-edit float-right"
                       title="Edit"
+                      onClick={() => setEditTaskInfo(!EditTaskInfo)}
                       style={{
                         cursor: "pointer",
                         display: props.isAdmin ? "block" : "none",
@@ -182,7 +203,7 @@ const TaskViewer = props => {
                   <div style={{ display: "flex", flexDirection: "row" }}>
                     <Clock size={15} />
                     <h6 style={{ marginLeft: "2.5%" }}>
-                      <b>Due </b> {task.dueDate}
+                      <b>Due </b> {EditTaskInfo ? <Input type="date" onChange={editDueDate} /> :task.dueDate}
                     </h6>
                   </div>
                   <div style={{ display: "flex", flexDirection: "row" }} onClick={() => {}}>
@@ -202,6 +223,8 @@ const TaskViewer = props => {
                 </div>
                 </CardBody>
               </Card>
+              
+              
               <Card>
                 <CardHeader>
                   <File size={20} />
