@@ -263,7 +263,7 @@ class Group extends Component {
                 {this.state.groupActivities.length > 0 ? (
                   this.state.groupActivities.map(activity => (
                     <GroupActivityItem
-                      description={activity.description}
+                      description={activity.description.split("in group")[0].trim()}
                       key={activity.id}
                       createdAt={activity.createdAt}
                     />
