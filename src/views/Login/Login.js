@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import {Row,Col,Card,
   CardBody} from 'reactstrap'
-import Logo from '../../assets/img/brand/logo.svg' 
+import Logo from '../../assets/img/brand/logo.PNG' 
 import MobileLogin from './components/mobile'
 import EmailLogin from './components/email'
 import { withRouter } from 'react-router-dom'
@@ -46,7 +46,7 @@ class Login extends Component{
     return (
       <div style={{height: "100vh",backgroundColor: "#1FDC75"}}>
         <div style={{display: "flex",justifyContent: "left"}}>
-        <img src={Logo} alt="" height="60" width="150"/>
+        <img src={Logo} alt="" height="60" width="60"/>
       </div>
       <Row style={{margin: 0}}>
           <Col xs="12" sm="12" lg="9" className="p-3" style={{paddingRight: 0}}>

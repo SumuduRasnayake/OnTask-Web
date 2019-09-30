@@ -16,7 +16,7 @@ import {
 import PropTypes from "prop-types";
 
 import { AppNavbarBrand } from "@coreui/react";
-import logo from "../../assets/img/brand/logo.svg";
+import logo from "../../assets/img/brand/logo.PNG";
 
 const propTypes = {
   children: PropTypes.node,
@@ -39,12 +39,10 @@ class DefaultHeader extends Component {
   };
 
   updateNotifications = data => {
-    console.log("data:",data)
     this.setState(prevState => ({
       noOfNotis: prevState.noOfNotis + 1,
       notifications: [...prevState.notifications, JSON.parse(data)],
     }));
-    console.log(this.state.notifications)
   };
 
   markNotificationAsSeen(id){
@@ -86,7 +84,7 @@ class DefaultHeader extends Component {
     return (
       <React.Fragment>
         <AppNavbarBrand
-          full={{ src: logo, width: 90, height: 45, alt: "OnTask" }}
+          full={{ src: logo, width: 55, height: 45, alt: "OnTask" }}
           href="/dashboard"
         />
 

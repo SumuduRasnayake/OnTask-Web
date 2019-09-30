@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Row, Col, Card, CardBody } from "reactstrap";
 import {Link} from 'react-router-dom'
-import Logo from "../../assets/img/brand/logo.svg";
+import Logo from "../../assets/img/brand/logo.PNG";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { withRouter } from "react-router-dom";
