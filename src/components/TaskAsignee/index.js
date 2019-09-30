@@ -11,10 +11,9 @@ const SubTasks = props => {
     const [trig,setTrig] = useState(false)
     const [asignees,setAsignees] = useState([])
     const [searchResults,setSearchResults] = useState([])
-    const [groupId,setGroupId] = useState(0)
 
     function handleChange(e){
-      SENDER.get('/member/'+groupId+"/search/"+e.target.value).then(
+      SENDER.get('/member/'+props.groupId+"/search/"+e.target.value).then(
         res => {
           setSearchResults(res.data)
         }
@@ -47,9 +46,6 @@ const SubTasks = props => {
 
     useEffect(
       () => {
-        SENDER.get('/tasks/'+props.taskId).then(
-          res => setGroupId(res.data.id)
-        ).catch(err => console.log(err))
 
         SENDER.get('/task-asignee/'+props.taskId).then(
           res => {
@@ -76,7 +72,7 @@ const SubTasks = props => {
                 </CardHeader>
                 <CardBody style={{padding: 0}}>
                       <Input name="name" style={{display: isExpanded ? "block" : "none"}} onChange={handleChange} placeholder="Search group members"></Input>
-                  <ListGroup>
+                  <ListGroup style={{marginTop: "2%",marginRight: "2%",marginLeft: "1%",marginBottom: "1%"}}>
                   {searchResults.map( result => {
               const lname = result.lname ? result.lname : ""
               return <MemberSearchItem
@@ -84,7 +80,7 @@ const SubTasks = props => {
                 id={result.userId}
                 data={result}
                 selectMember={addAsignee}
-                name={result.fname+""+lname}
+                name={result.fname+" "+lname}
               ></MemberSearchItem>
             })}
                     {asignees.length > 0 ? asignees.map( asignee => {
@@ -93,6 +89,7 @@ const SubTasks = props => {
                         key={asignee.userId}
                         userId={asignee.userId}
                         taskId={props.taskId}
+                        emailHash={asignee.emailHash}
                         propic={asignee.propic}
                         onRemove={onRemove}
                         name={asignee.fname+" "+lname}
