@@ -45,15 +45,15 @@
     "reactstrap": "^8.0.0",
     "simple-line-icons": "^2.4.1",
     "styled-components": "^4.3.2",
-    "styled-icons": "^8.3.0"
+    "styled-icons": "^8.3.0",
+    "react-scripts": "^3.0.1"
   },
   "devDependencies": {
-    "react-scripts": "^3.0.1",
     "react-test-renderer": "^16.9.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm install react-scripts && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
