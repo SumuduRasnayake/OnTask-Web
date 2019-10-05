@@ -24,7 +24,7 @@ const TaskActivity = props => {
             console.log("tac:",res.data)
           }
         ).catch(err => console.log(err))
-      },[props.taskId,updateTaskActivityFeed]
+      },[props.taskId]
     )
 
    

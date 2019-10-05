@@ -31,14 +31,12 @@ class GroupMemberItem extends Component {
     return (
       <ListGroupItem
         action
-        tag="a"
         style={{
           padding: "1%",
           alignItems: "center",
           display: "flex",
           flexDirection: "row",
         }}
-        className="list-group-item-accent-warning"
       >
         {this.props.img ? (
           <img
@@ -64,7 +62,7 @@ class GroupMemberItem extends Component {
         )}
         <a
           style={{ marginLeft: "1%", textDecoration: "none", color: "black" }}
-          href={"/users/" + this.props.id}
+          href={"/users/" + this.props.userId}
         >
           {this.props.name}
         </a>

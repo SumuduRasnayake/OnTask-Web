@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Modal from "react-bootstrap/Modal";
 import { withRouter} from 'react-router-dom'
-//import {Authenticate} from '../../utils/OutlookConfig'
 import TaskAsignee from "../../components/TaskAsignee";
 import TaskDiscussion from "../../components/TaskDiscussion";
 import SubTasks from "../../components/SubTasks";
@@ -243,7 +242,6 @@ const TaskViewer = props => {
                   </div>
                 </CardHeader>
                 <CardBody style={{ padding: 0 }}>
-                  {props.isAssigned ? "haha" : "hehe"}
                   {resources.map(resource => {
                     return (
                       <TaskResItem
@@ -303,7 +301,7 @@ const TaskViewer = props => {
               <TaskActivity taskId={props.taskId}/>
             </Col>
             <Col xs="12" sm="12" lg="4">
-            <SubTasks isAdmin={props.isAdmin} taskId={props.taskId} sendSubTaskStats={getSubTaskStats}/> 
+            <SubTasks isAdmin={props.isAdmin} isAssigned={props.isAssigned} taskId={props.taskId} sendSubTaskStats={getSubTaskStats}/> 
             <TaskDiscussion taskId={props.taskId} />
             </Col>
           </Row>

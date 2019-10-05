@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 import pusher from "../../utils/PusherObject";
+import GroupTasks from './components/GroupTasks'
 import GroupActivityItem from "../../components/ActivityItem";
 import RequireAuth from "../../utils/PrivateRoute";
 import GroupHeader from "./components/GroupHeader";
-import TaskItem from "../../components/TaskItem";
+
 import SENDER from "../../utils/SENDER";
-import NewTaskForm from "../../components/NewTaskForm";
+
 import GroupMembers from './components/GroupMembers'
-import MemberItem from "../../components/GroupMemberItem";
-import TaskViewer from "../TaskViewer";
+
 import {
   Progress,
   Button,
-  ListGroupItem,
   Card,
   CardBody,
   CardHeader,
@@ -51,24 +50,15 @@ class Group extends Component {
 
   state = {
     trig: false,
-    i: 0,
     inviteLink: "",
     groupData: [],
     announcements: [],
     notices: [],
-    assignedTasks: [],
     groupActivities: [],
-    isSelectedTaskAssigned: false,
-    tasks: [],
-    admins: [],
-    members: [],
     completedTaskCount: 0,
     taskCount: 0,
     isAdmin: false,
     selectedNotice: null,
-    selectedTask: null,
-    popoverOpen: false,
-    memberCount: 0,
     percentage: 0,
     description: "",
     desEditable: false,
@@ -122,25 +112,9 @@ class Group extends Component {
       })
       .catch(err => console.log(err));
 
-    SENDER.get("/" + this.props.match.params.gid + "/tasks")
-      .then(res => {
-        let completedTasks = res.data.filter(
-          task => task.completed === true
-        );
-        this.setState({
-          tasks: res.data,
-          TaskCount: res.data.length,
-          completedTaskCount: completedTasks.length,
-          percentage: Math.round((completedTasks.length / res.data.length ) * 100)
-        });
-      })
-      .catch(err => console.log(err));
+  
 
-      SENDER.get("/user/" + localStorage.getItem("id") + "/tasks")
-      .then(res => {
-        this.setState({ assignedTasks: res.data });
-      })
-      .catch(err => console.log(err));
+    
 
     SENDER.get("/notices/group/" + this.props.match.params.gid)
       .then(res => {
@@ -148,20 +122,10 @@ class Group extends Component {
       })
       .catch(err => console.log(err));
 
-    SENDER.get("/member/" + this.props.match.params.gid)
-      .then(res => {
-        this.setState({ memberCount: res.data.length });
-        const admins = res.data.filter(member => member.role === "admin");
-        const members = res.data.filter(member => member.role === "member");
-        this.setState({ admins: admins });
-        this.setState({ members: members });
-      })
-      .catch(err => console.log(err));
+
   }
 
-  getClickedTask = (task,isAssigned) => {
-    this.setState(prevState => ({ i: prevState.i+1,isSelectedTaskAssigned: isAssigned,selectedTask: task }));
-  };
+  
 
   updateTaskList = () => {
     SENDER.get("/" + this.props.match.params.gid + "/tasks")
@@ -198,60 +162,9 @@ class Group extends Component {
                 />
               </CardBody>
             </Card>
-            <Card className="border-light">
-              <CardHeader>
-                <b>Tasks</b>
-                <div className="card-header-actions">
-                  <NewTaskForm
-                    groupId={this.props.match.params.gid}
-                    onAdd={this.updateTaskList}
-                    isAdmin={this.state.isAdmin}
-                  />
-                </div>
-              </CardHeader>
-              <CardBody style={{ backgroundColor: "#D6E0E3", padding: 0 }}>
-                {this.state.tasks.length > 0 ? (
-                  this.state.tasks.map(task => {
-                    const isAssigned = this.state.assignedTasks.includes(task) 
-                    console.log("pavindu",isAssigned)
-                    return (
-                      <TaskItem
-                        style={{
-                          cursor: "pointer",
-                          padding: "2.5%",
-                          margin: 0,
-                        }}
-                        key={task.id}
-                        isAssigned={isAssigned}
-                        task={task}
-                        sendTask={this.getClickedTask}
-                      />
-                    );
-                  })
-                ) : (
-                  <div
-                    className="text-center"
-                    style={{ display: this.state.isAdmin ? "block" : "none" }}
-                  >
-                    No tasks. Add some tasks from top right + sign in this
-                    widget
-                  </div>
-                )}
-              </CardBody>
-              <TaskViewer
-                name={
-                  this.state.selectedTask ? this.state.selectedTask.name : ""
-                }
-                groupId={this.props.match.params.gid}
-                taskId={
-                  this.state.selectedTask ? this.state.selectedTask.id : ""
-                }
-                i={this.state.i}
-                isAdmin={this.state.isAdmin}
-                isAssigned={this.state.isSelectedTaskAssigned}
-                group={this.state.groupData.name}
-              />
-            </Card>
+            <GroupTasks 
+              groupId={this.props.match.params.gid}
+              isAdmin={this.state.isAdmin} />
           </Col>
 
           <Col xs="12" sm="12" lg="4" style={{ marginTop: "0.5%",paddingLeft: 0 }}>
