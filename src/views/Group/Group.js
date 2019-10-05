@@ -6,6 +6,7 @@ import GroupHeader from "./components/GroupHeader";
 import TaskItem from "../../components/TaskItem";
 import SENDER from "../../utils/SENDER";
 import NewTaskForm from "../../components/NewTaskForm";
+import GroupMembers from './components/GroupMembers'
 import MemberItem from "../../components/GroupMemberItem";
 import TaskViewer from "../TaskViewer";
 import {
@@ -388,54 +389,9 @@ class Group extends Component {
           </Col>
 
           <Col xs="12" sm="6" lg="2" style={{ padding: 0 }}>
-            <Card style={{ margin: 0, height: "82vh" }}>
-              <CardBody style={{ padding: 0 }}>
-                <CardHeader>
-                  <b>Admins</b>
-                </CardHeader>
-                {this.state.admins.map(admin => {
-                  const lname = admin.lname ? admin.lname : "";
-                  return (
-                    <MemberItem
-                      userId={admin.userId}
-                      groupId={this.props.match.params.gid}
-                      m_role="admin"
-                      isAdmin={this.state.isAdmin}
-                      key={admin.fname}
-                      img={admin.propicURL}
-                      emailHash={admin.emailHash}
-                      name={admin.fname + " " + lname}
-                    />
-                  );
-                })}
-                <CardHeader>
-                  <b>Members</b>
-                </CardHeader>
-                {this.state.members.length > 0 ? (
-                  this.state.members.map(member => {
-                    const lname = member.lname ? member.lname : "";
-                    return (
-                      <MemberItem
-                        userId={member.userId}
-                        groupId={this.props.match.params.gid}
-                        isAdmin={this.state.isAdmin}
-                        m_role="member"
-                        key={member.fname}
-                        emailHash={member.emailHash}
-                        img={member.propicURL}
-                        name={member.fname + " " + lname}
-                      />
-                    );
-                  })
-                ) : (
-                  <ListGroupItem>
-                    <div className="text-center">
-                      No members.Invite someone to join the group
-                    </div>
-                  </ListGroupItem>
-                )}
-              </CardBody>
-            </Card>
+            <GroupMembers 
+              isAdmin={this.state.isAdmin} 
+              groupId={this.props.match.params.gid}/>
           </Col>
         </Row>
       </div>
