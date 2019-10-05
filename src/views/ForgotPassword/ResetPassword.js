@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import useForm from "../../utils/useForm";
 import axios from "axios";
@@ -12,9 +11,7 @@ const formStyle = {
 
 const ResetPassword = props => {
     const {values,handleChange,handleSubmit} = useForm(resetPassword)
-    const [error,setError] = useState("")
-    const [success,setSuccess] = useState("")
-    const [isSubmitting,setSubmitting] = useState("")
+    const [isSubmitting,setSubmitting] = useState(false)
     var params = new URLSearchParams(props.location.search);
 
     useEffect( () => {
@@ -41,10 +38,11 @@ const ResetPassword = props => {
         else{
             props.history.push('/login')
         }
-    },[])
+    },[params,props.history])
 
     function resetPassword(event){
         event.preventDefault()
+        setSubmitting(true)
         console.log(values)             
         if( values.new_password === values.con_password){
             axios.post('/auth/reset-pwd',{
@@ -57,7 +55,10 @@ const ResetPassword = props => {
                     }
                 }
             ).catch(
-                err => alert("Error happened. Please try again")
+                err => {
+                  setSubmitting(false)
+                  alert("Error happened. Please try again")
+                }
             )
         }
             
@@ -68,10 +69,10 @@ const ResetPassword = props => {
         <Form onSubmit={handleSubmit} style={formStyle}>
         <h4 style={{ textAlign: "center" }}>Reset Your Password</h4>
         <Form.Text style={{ textAlign: "center", color: "red" }}>
-          {error}
+          
         </Form.Text>
         <Form.Text style={{ textAlign: "center", color: "green" }}>
-          {success}
+          
         </Form.Text>
         <Form.Group>
           <label>New password</label>

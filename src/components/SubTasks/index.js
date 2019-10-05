@@ -38,7 +38,7 @@ const SubTasks = props => {
             props.sendSubTaskStats(i,res.data.length)
           }
         ).catch(err => console.log(err))
-      },[trig]
+      },[props,trig]
     )
     return (
         <Card>

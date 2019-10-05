@@ -1,16 +1,10 @@
 import React from 'react'
-import SENDER from '../../../utils/SENDER'
 import moment from 'moment'
 var HtmlToReactParser = require("html-to-react").Parser;
 
 
 const FeedItem = props => {
-    const CreatedDateFields = new Date(props.createdAt).toString().split(" ");
 
-    const createdDate = CreatedDateFields.slice(1, 4)
-      .toString()
-      .replace(/,/, "");
-    const createdTime = CreatedDateFields[4];
     var htmlToReactParser = new HtmlToReactParser();
   
     return (

@@ -150,8 +150,8 @@ class Group extends Component {
     SENDER.get("/member/" + this.props.match.params.gid)
       .then(res => {
         this.setState({ memberCount: res.data.length });
-        const admins = res.data.filter(member => member.role == "admin");
-        const members = res.data.filter(member => member.role == "member");
+        const admins = res.data.filter(member => member.role === "admin");
+        const members = res.data.filter(member => member.role === "member");
         this.setState({ admins: admins });
         this.setState({ members: members });
       })
@@ -399,7 +399,7 @@ class Group extends Component {
                     <MemberItem
                       userId={admin.userId}
                       groupId={this.props.match.params.gid}
-                      role="admin"
+                      m_role="admin"
                       isAdmin={this.state.isAdmin}
                       key={admin.fname}
                       img={admin.propicURL}
@@ -419,7 +419,7 @@ class Group extends Component {
                         userId={member.userId}
                         groupId={this.props.match.params.gid}
                         isAdmin={this.state.isAdmin}
-                        role="member"
+                        m_role="member"
                         key={member.fname}
                         emailHash={member.emailHash}
                         img={member.propicURL}

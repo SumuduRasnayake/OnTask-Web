@@ -24,7 +24,7 @@ const TaskDiscussion = props => {
         setComments(res.data);
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [props.taskId]);
 
   return (
     <Card className="border-light">

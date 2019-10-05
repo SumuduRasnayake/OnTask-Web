@@ -83,14 +83,14 @@ class GroupMemberItem extends Component {
             <DropdownItem
               onClick={this.makeMemberAdmin}
               style={{
-                display: this.props.role === "member" ? "block" : "none",
+                display: this.props.m_role === "member" ? "block" : "none",
               }}
             >
               Make admin
             </DropdownItem>
             <DropdownItem
               style={{
-                display: this.props.role === "admin" ? "block" : "none",
+                display: this.props.m_role === "admin" ? "block" : "none",
               }}
               onClick={this.removeFromAdmin}
             >

@@ -104,8 +104,7 @@ const TaskViewer = props => {
         setP(!p)
         setEditTaskInfo(false)
       } 
-    ).
-    catch(
+    ).catch(
       err => console.log(err)
     )
   }
@@ -150,7 +149,7 @@ const TaskViewer = props => {
       .catch(err => console.log(err));
     
     
-  }, [props.i,p]);
+  }, [props.i,p,props.taskId]);
 
   return (
     <>

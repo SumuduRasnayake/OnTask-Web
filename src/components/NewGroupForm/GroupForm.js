@@ -13,7 +13,7 @@ import MemberSearchItem from "../MemberSearchItem";
 
 const GroupForm = props => {
   const { values, handleChange, handleSubmit } = useForm(createNewGroup);
-  const [groupMembers,setGroupMembers] = useState([])
+  const groupMembers = [];
   const [trig,setTrig] = useState(true)
   const [searchResults,setSearchResults] = useState([])
   const [NOfChars, setNOfChars] = useState(160);
@@ -157,6 +157,7 @@ const GroupForm = props => {
         </Col>
       </Row>
       <Modal.Footer>
+      {/* eslint-disable-next-line */}
         <a
           href=""
           style={{ textDecoration: "none", color: "red" }}

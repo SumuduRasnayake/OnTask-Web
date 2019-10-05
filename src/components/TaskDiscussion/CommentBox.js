@@ -7,7 +7,6 @@ import ReactMarkdown from "react-markdown";
 
 const CommentBox = props => {
   const [input, setInput] = useState("");
-  const [isShown, setIsShown] = useState(false);
 
   function handleChange(e) {
     setInput(e.target.value);

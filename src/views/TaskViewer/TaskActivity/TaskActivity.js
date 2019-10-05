@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect,useCallback } from 'react'
 import { Card, CardHeader, CardBody} from 'reactstrap'
 import pusher from "../../../utils/PusherObject";
 import TaskActivityItem from '../../../components/ActivityItem'
@@ -6,6 +6,12 @@ import SENDER from '../../../utils/SENDER'
 
 const TaskActivity = props => {
     const [taskActivities,setTaskActivities] = useState([])
+
+    const updateTaskActivityFeed = useCallback( data => {
+      taskActivities.push(JSON.parse(data))
+      },[taskActivities])
+    
+      
     useEffect(
       () => {
         var channel = pusher.subscribe("task_" + props.taskId);
@@ -18,13 +24,11 @@ const TaskActivity = props => {
             console.log("tac:",res.data)
           }
         ).catch(err => console.log(err))
-      },[props.taskId]
+      },[props.taskId,updateTaskActivityFeed]
     )
 
-    function updateTaskActivityFeed (data){
-        taskActivities.push(JSON.parse(data))
-    };
-
+   
+    
     return (
         <Card>
               <CardHeader>

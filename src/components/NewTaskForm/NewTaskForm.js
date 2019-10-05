@@ -94,6 +94,7 @@ class NewTaskForm extends React.Component {
               </Form.Group>
           </Modal.Body>
           <Modal.Footer>
+          {/* eslint-disable-next-line */}
             <a style={{color: "red",cursor: "pointer"}}onClick={this.handleClose}>
               Cancel
             </a>

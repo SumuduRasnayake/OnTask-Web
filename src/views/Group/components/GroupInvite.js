@@ -40,7 +40,7 @@ class GroupInviteModal extends React.Component {
     }).then(
       res => {
         console.log(res.data)
-        this.setState({inviteLink: "http://localhost:3000/groups/"+this.props.groupId+"/?" +"itoken="+res.data.id.itoken})
+        this.setState({inviteLink: `http://localhost:3000/groups/${this.props.groupId}/?itoken=${res.data.id.itoken}`})
       }
     ).catch(err => console.log(err))
   }
