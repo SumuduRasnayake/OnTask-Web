@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge,Card,CardBody } from "reactstrap";
+import { Card,CardBody } from "reactstrap";
 
 const TaskItem = props => {
   return (

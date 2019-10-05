@@ -3,7 +3,6 @@ import RequireAuth from "../../utils/PrivateRoute";
 import FeedItem from './components/FeedItem'
 import TaskItem from "../../components/TaskItem";
 import pusher from "../../utils/PusherObject";
-import UserNotification from '../../containers/DefaultLayout/UserNotification'
 import SENDER from "../../utils/SENDER";
 import TaskViewer from "../TaskViewer";
 import {
@@ -51,7 +50,7 @@ class Dashboard extends Component {
     await SENDER.get("/" + localStorage.getItem("id") + "/groups")
       .then(res => {
         this.setState({ groups: res.data });
-        res.data.map(group => {
+        res.data.forEach(function setPusherListeners(group,index) {
           var channel = pusher.subscribe("group_" + group.groupId);
           channel.bind("new_activity", this.updateFeed);
         });

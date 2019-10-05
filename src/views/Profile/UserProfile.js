@@ -5,7 +5,6 @@ import {Github} from 'styled-icons/boxicons-logos/Github'
 import ProfilePicture from '../../components/ProfilePicture'
 import {Link2} from 'styled-icons/feather/Link2'
 import {ScLinkedin} from 'styled-icons/evil/ScLinkedin'
-import {StackOverflow} from 'styled-icons/fa-brands/StackOverflow'
 import { Row, Col, Card, CardBody } from "reactstrap";
 import EducationItem from './EducationItem'
 import WorkItem from './WorkItem'
@@ -36,7 +35,7 @@ const UserProfile = props => {
                   console.log(res.data)
                   setWork(res.data)
                 })
-      },[]
+      },[props.id]
   )
   return (
     <>
@@ -75,15 +74,15 @@ const UserProfile = props => {
               </div>
               <div style={{display: userData.githubLink ? "flex": "none",flexDirection: "row",alignItems: "center"}}>
               <Github size={15} />
-              <a href={userData.githubLink} target="_blank" style={{margin: "0.5%",marginLeft: "1.5%",color: "black"}}>{userData.githubLink}</a>
+              <a href={userData.githubLink} rel="noopener noreferrer" target="_blank" style={{margin: "0.5%",marginLeft: "1.5%",color: "black"}}>{userData.githubLink}</a>
               </div>
               <div style={{display:  userData.websiteLink ? "flex" : "none",flexDirection: "row",alignItems: "center"}}>
               <Link2 size={15} />
-              <a href={userData.websiteLink} target="_blank" style={{margin: "0.5%",marginLeft: "1.5%",color: "black"}}>{userData.websiteLink}</a>
+              <a href={userData.websiteLink} rel="noopener noreferrer" target="_blank" style={{margin: "0.5%",marginLeft: "1.5%",color: "black"}}>{userData.websiteLink}</a>
               </div>
               <div style={{display:  userData.linkedInLink ? "flex" : "none",flexDirection: "row",alignItems: "center"}}>
               <ScLinkedin size={25} />
-              <a href={userData.linkedInLink} target="_blank" style={{margin: "0.5%",marginLeft: "1.5%",color: "black"}}>{userData.linkedInLink}</a>
+              <a href={userData.linkedInLink} rel="noopener noreferrer" target="_blank" style={{margin: "0.5%",marginLeft: "1.5%",color: "black"}}>{userData.linkedInLink}</a>
               </div>
               </CardBody>
           </Card>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Form, Card, CardBody, Input, Button } from "reactstrap";
+import { Row, Col, Form, Input, Button } from "reactstrap";
 import SENDER from "../../utils/SENDER";
 import useForm from "../../utils/useForm";
 import Tabs from "react-bootstrap/Tabs";

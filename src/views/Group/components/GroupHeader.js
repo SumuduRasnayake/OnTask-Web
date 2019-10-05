@@ -1,20 +1,8 @@
 import React, { Component } from "react";
-import {
-  CardBody,
-  Popover,
-  PopoverBody,
-  PopoverHeader,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText,
-} from "reactstrap";
 import GroupSettings from "./GroupSettings";
 import SENDER from "../../../utils/SENDER";
 import GroupInvite from "./GroupInvite";
-
+  
 class GroupHeader extends Component {
   state = {
     popoverOpen: false,

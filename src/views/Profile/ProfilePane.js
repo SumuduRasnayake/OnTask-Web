@@ -3,16 +3,10 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Progress,
   TabContent,
   Card,
   CardBody,
-  Input,
-  Row,
-  Col,
-  TabPane,
-  ListGroup,
-  ListGroupItem,
+  TabPane
 } from "reactstrap";
 import BasicInfoSettings from "./BasicInfoSettings";
 import WebPresenceSettings from "./WebPresenceSettings";
@@ -21,7 +15,6 @@ import WorkSettings from "./WorkSettings";
 import EducationSettings from "./EducationSettings";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { AppSwitch } from "@coreui/react";
 import UserProfile from "./UserProfile";
 
 const propTypes = {

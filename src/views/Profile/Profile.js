@@ -1,24 +1,11 @@
 import React, { Component } from "react";
-import { Bar, Line } from "react-chartjs-2";
 import RequireAuth from "../../utils/PrivateRoute";
-import { Activity } from 'styled-icons/feather/Activity'
 import SENDER from "../../utils/SENDER";
 import ProfilePane from './ProfilePane'
 import {
-  ButtonDropdown,
-  Popover, PopoverBody, PopoverHeader,
-  Button,
-  ButtonGroup,
-  ListGroupItem,
   Card,
   CardBody,
-  CardHeader,
-  CardTitle,
   Col,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
   Row,
 } from "reactstrap";
 

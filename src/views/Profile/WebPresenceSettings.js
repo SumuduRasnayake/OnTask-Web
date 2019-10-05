@@ -1,5 +1,5 @@
 import React,{ useState,useEffect} from "react";
-import { Row, Col, Card, CardBody, Input, Form, Button } from "reactstrap";
+import {  Input, Form, Button } from "reactstrap";
 import SENDER from "../../utils/SENDER";
 import useForm from "../../utils/useForm";
 
@@ -34,7 +34,7 @@ const WebPresenceSettings = props => {
     <>
       <h5>Web Presence</h5>
 
-      <Form onSubmit={updateWebPresence}>
+      <Form onSubmit={handleSubmit}>
         website link
         <Input
           name="websiteLink"

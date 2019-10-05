@@ -1,7 +1,6 @@
 import React,{ useState, useEffect} from 'react'
-import useForm from '../../utils/useForm'
 import SENDER from '../../utils/SENDER'
-import { Card,CardHeader,CardBody,Form,Input,Button,ListGroup} from 'reactstrap'
+import { Card,CardHeader,CardBody,Input,ListGroup} from 'reactstrap'
 import TaskAsigneeItem from './TaskAsigneeItem'
 import { Checklist } from "styled-icons/octicons/Checklist";
 import MemberSearchItem from "../MemberSearchItem";
@@ -52,7 +51,7 @@ const SubTasks = props => {
             setAsignees(res.data)
           }
         ).catch(err => console.log(err))
-      },[trig]
+      },[trig,props.taskId]
     )
     return (
         <Card>

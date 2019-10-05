@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Card, CardBody } from "reactstrap";
+import { Row, Col } from "reactstrap";
 import {Link} from 'react-router-dom'
 import Logo from "../../assets/img/brand/logo.PNG";
 import EmailSignup from "./EmailForm";
