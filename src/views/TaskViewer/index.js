@@ -156,7 +156,7 @@ const TaskViewer = props => {
         size="lg"
         show={show}
         onHide={closeModal}
-        style={{ height: "100vh" }}
+        //style={{ height: "90vh" }}
         backdrop="static"
         dialogClassName="task_viewer_modal"
         aria-labelledby="contained-modal-title-vcenter"
@@ -168,7 +168,7 @@ const TaskViewer = props => {
             <h3>
             {props.name}{" "}
             <span style={{ color: "gray", fontSize: "0.8em" }}>
-              in {props.group}
+              in {props.groupName}
             </span>
             </h3>
             <UncontrolledDropdown direction="right" style={{marginTop: "-1.5%"}}>
@@ -184,10 +184,10 @@ const TaskViewer = props => {
             </div>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ minHeight: "50vh" }}>
+        <Modal.Body>
           <Row style={{ marginTop: "0.5%" }}>
             <Col xs="12" sm="12" lg="3">
-            <Card>
+            <Card style={{border: 0,padding: 0}}>
                 <CardBody>
                 <i
                       className="fa fa-edit float-right"
@@ -198,19 +198,19 @@ const TaskViewer = props => {
                         display: props.isAdmin ? "block" : "none",
                       }}
                     />
-                  <div style={{ display: "flex", flexDirection: "row" }}>
+                  <div style={{ display: "flex", flexDirection: "row",padding: "1%" }}>
                     <Clock size={15} />
                     <h6 style={{ marginLeft: "2.5%" }}>
                       <b>Due </b> {EditTaskInfo ? <Input type="date" onChange={editDueDate} /> :task.dueDate}
                     </h6>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "row" }} onClick={() => {}}>
+                  <div style={{ display: "flex", flexDirection: "row",padding: "1%"  }} onClick={() => {}}>
                     <Microsoft size={15} />
                     <h6 style={{ marginLeft: "2.5%" }}>
                       Add to Outlook
                     </h6>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "row" }}>
+                  <div style={{ display: "flex", flexDirection: "row",padding: "1%"  }}>
                     <Tick size={20} style={{display: subtaskTotal === 0 ? "block": "none"}}/>
                     <h6 style={{ display: subtaskTotal === 0 ? "block": "none",marginLeft: "1%",cursor: "pointer" }} onClick={toggleTaskCompletedStatus}>
                       {task.isCompleted ? "Mark as not completed" : "Mark as completed"} 

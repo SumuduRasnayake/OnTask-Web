@@ -7,6 +7,7 @@ import MemberSearchItem from "../../../components/MemberSearchItem";
 import SENDER from "../../../utils/SENDER";
 import Clipboard from 'react-clipboard.js';
 import InputGroup from "react-bootstrap/InputGroup";
+import './group_invite.css'
 
 class GroupInviteModal extends React.Component {
   constructor(props, context) {
@@ -46,14 +47,14 @@ class GroupInviteModal extends React.Component {
   }
 
   addMember = data => {
-    console.log({
-         userId: data.userId,
-         groupId: parseInt(this.props.groupId)
-      });
     SENDER.post('/members',{
       userId: data.userId,
-      groupId: parseInt(this.props.groupId)
-   }).then( res => {
+      groupId: parseInt(this.props.groupId)},{
+        params: {
+          addedBy: localStorage.getItem('id')
+        }
+      }
+   ).then( res => {
       if(res.status === 200){
         const newSR = this.state.searchResults.filter(function(value, index, arr) {
           return value !== data;
@@ -61,7 +62,6 @@ class GroupInviteModal extends React.Component {
         this.setState({ searchResults: newSR });
         this.state.groupMembers.push(data);
         this.setState({ trig: !this.state.trig });
-        console.log([...this.state.groupMembers]);
       }
     })
   };
@@ -133,6 +133,7 @@ class GroupInviteModal extends React.Component {
           backdrop="static"
           {...this.props}
           size="lg"
+          dialogClassName="group_invite_modal"
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >

@@ -35,7 +35,6 @@ const ProfilePicture = props => {
     useEffect(() => {
         SENDER.get("/user/" + props.id + "/pro-pic").then(
           res => {
-            console.table([res.data])
             setPropic(res.data);
           }
         );
@@ -53,7 +52,7 @@ const ProfilePicture = props => {
           className="pro_pic"
           alt=""
           style={{ borderRadius: "10px",height: "40vh",width: "100%"}}
-        />: <img src={"https://www.gravatar.com/avatar/"+propic.emailHash+"?d=retro&s=214"} alt=""/>
+        />: <img  className="pro_pic" src={"https://www.gravatar.com/avatar/"+propic.emailHash+"?d=retro&s=214"} alt=""/>
         }
         </div>
         <div className="pro_pic_update_btn" style={{display: localStorage.getItem('id') === props.id ? "block" : "none"}}>
@@ -67,7 +66,7 @@ const ProfilePicture = props => {
           <Camera
             size="30"
             onClick={showOpenFileDlg}
-            style={{color: "white"}}
+            style={{color: "white",textAlign: "center"}}
             title="update profile photo"
           />
         </div>

@@ -28,6 +28,10 @@ const styles = {
   background: {
     // background: "linear-gradient(180deg, #1117e1 50%, #FFFFFF 50%)",
     backgroundColor: "#1FDC75",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+    justifyContent: "center",
   minHeight: "100vh" 
   },
 };
@@ -54,48 +58,8 @@ class Signup extends Component {
   render() {
     return (
       <div style={styles.background}>
-        <div style={{ display: "flex", justifyContent: "left" }}>
-          <img src={Logo} alt="" height="50" width="150" />
-        </div>
-        <Row style={{ margin: 0}}>
-          <Col
-            xs="12"
-            sm="6"
-            lg="3"
-            className="p-3"
-            style={{ paddingRight: 0 }}
-          />
-          <Col
-            xs="12"
-            sm="12"
-            lg="6"
-            className="p-3"
-            style={{ paddingRight: 0 }}
-          >
-            {/* <Tabs>
-              <TabList style={{ padding: 0,border: 0 }}>
-                <Tab style={{ width: "50%",border: 0, margin: 0, padding: 0 }}>
-                  <h5 style={{ marginTop: "5%", textAlign: "center" }}>
-                    Signup with mobile
-                  </h5>
-                </Tab>
-                <Tab style={{ width: "50%", border: 0,margin: 0, padding: 0 }}>
-                  <h5 style={{ marginTop: "5%", textAlign: "center" }}>
-                    Signup with Email
-                  </h5>
-                </Tab>
-              </TabList>
-
-              <TabPanel style={{ marginTop: "-1.5%" }}>
-                <MobileSignup signupWithMobile={this.signupWithMobile} />
-              </TabPanel>
-              <TabPanel style={{ marginTop: "-1%" }}> */}
-                <EmailSignup />
-              {/* </TabPanel>
-            </Tabs> */}
-            <h6 style={{marginTop: "2%",textAlign: "center"}}>Have an account? <Link to="/login">Login</Link></h6>
-          </Col>
-        </Row>
+                  <EmailSignup />
+                  <h6 style={{marginTop: "1%",textAlign: "center"}}>Have an account? <Link to="/login">Login</Link></h6>  
       </div>
     );
   }

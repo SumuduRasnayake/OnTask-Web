@@ -93,7 +93,13 @@ class Dashboard extends Component {
                       task={task}
                     />
                   );
-                }): "No tasks assigned"}
+                }): (
+                  <Card style={{border: "none"}}>
+                  <CardBody>
+                    <p style={{padding: "5%",paddingLeft: 0,color: "gray",textAlign: "center"}}>No tasks assigned</p>
+                  </CardBody>
+                </Card>
+                )}
                 <TaskViewer
                   name={
                     this.state.selectedTask ? this.state.selectedTask.name : ""
@@ -117,7 +123,7 @@ class Dashboard extends Component {
                 <h6>{new Date().toJSON().slice(0, 10)}</h6>
               </div>
             </div>
-            {this.state.feedItems.map( feedItem => { 
+            { this.state.feedItems.length > 0 ? this.state.feedItems.map( feedItem => { 
                return (
                  <Card style={{marginBottom: 0}}>
                    <CardBody style={{padding: "0.5%",paddingBottom: "2%"}}>
@@ -131,7 +137,13 @@ class Dashboard extends Component {
               </CardBody>
                  </Card>
                )
-              })}
+              }): (
+                <Card style={{border: "none"}}>
+                <CardBody>
+                  <p style={{padding: "5%",paddingLeft: 0,color: "gray",textAlign: "center"}}>No recent activity</p>
+                </CardBody>
+              </Card>
+              )}
           </Col>
           <Col xs="12" sm="12" lg="4" style={{ marginTop: "0.5%" }}>
                 <div
@@ -168,7 +180,11 @@ class Dashboard extends Component {
                     );
                   })
                 ) : (
-                  <p>No groups</p>
+                  <Card style={{padding: "1%",border: "none"}}>
+                  <CardBody style={{}}>
+                    <p style={{padding: "4%",paddingLeft: 0,color: "gray",textAlign: "center"}}>No groups</p>
+                  </CardBody>
+                </Card>
                 )}
           </Col>
         </Row>

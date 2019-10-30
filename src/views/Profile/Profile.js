@@ -42,14 +42,12 @@ class Profile extends Component {
 
   render() {
     return (
-      <Row style={{ marginTop: "0.5%" }}>
-      
-      <Col xs="12" sm="12" lg="12" style={{paddingRight: 0}}>
-      <Card style={{minHeight: "87vh",marginBottom: "1%",padding: "1%"}}>
-          <CardBody>
+      <Row style={{ marginTop: "0.5%" }}>   
+            <Col xs="12" sm="12" lg="1" style={{paddingRight: 0}}></Col>  
+      <Col xs="12" sm="12" lg="10" style={{paddingRight: 0}}>
+     
             <ProfilePane id={this.props.match.params.id}/>
-          </CardBody>
-        </Card>
+        
       </Col>
       </Row>  
     );

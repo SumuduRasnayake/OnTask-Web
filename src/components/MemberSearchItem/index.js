@@ -12,18 +12,9 @@ class MemberSearchItem extends Component {
 
   render() {
     return (
-      <div
-      style={{
-        alignItems: "center",
-        display: this.props.id !== parseInt(localStorage.getItem('id'))?"flex":"none",
-        flexDirection: "row",
-        paddingBottom: "2%"
-      }}
-      >
+        <>
         <ListGroupItem
           action
-          tag="a"
-          href={"/users/" + this.props.id}
           style={{
             padding: "0.5%",
             border: 0,
@@ -33,21 +24,31 @@ class MemberSearchItem extends Component {
           }}
           className="list-group-item-accent-warning"
         >
-          {
+          <div
+      style={{
+        alignItems: "center",
+        display: this.props.id !== parseInt(localStorage.getItem('id'))?"flex":"none",
+        flexDirection: "row",
+        height: "5vh",
+        paddingBottom: "2%"
+      }}
+      onClick={() => this.props.history.push("/users/" + this.props.id)}
+      >
+        {
             this.props.data.propicURL ? 
             <img
-            style={{ borderRadius: "50%" }}
+            style={{ borderRadius: "50%",marginRight: "2%" }}
             className="img-avatar"
             width="25"
             height="25"
             src={this.props.data.propicURL}
             alt=""
           /> :
-          <img className="img-avatar" src={"https://www.gravatar.com/avatar/"+this.props.data.emailHash+"?d=retro&s=25"} alt=""/>
+          <img style={{ marginRight: "4%" }} className="img-avatar" src={"https://www.gravatar.com/avatar/"+this.props.data.emailHash+"?d=retro&s=25"} alt=""/>
           }
           <div style={{ marginLeft: "1%" }}>{this.props.name} </div>
-        </ListGroupItem>
-        <div style={{ flexGrow: 1 }} />
+      </div>
+      <div style={{ flexGrow: 1 }} />
          {this.props.selected ? "" : <Button
             color="success"
             disabled={this.state.isDisabled}
@@ -58,8 +59,9 @@ class MemberSearchItem extends Component {
             style={{marginLeft: "1%"}}
           >
             Add
-          </Button>}  
-      </div>
+          </Button>} 
+        </ListGroupItem> 
+      </>
     );
   }
 }

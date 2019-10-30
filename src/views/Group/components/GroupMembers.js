@@ -23,7 +23,7 @@ const GroupMembers = props => {
     },[props.groupId])
 
     return (
-        <Card style={{ margin: 0, height: "82vh" }}>
+        <Card style={{ padding: 0,margin: 0, height: "84vh" }}>
         <CardBody style={{ padding: 0 }}>
           <CardHeader>
             <b>Admins</b>

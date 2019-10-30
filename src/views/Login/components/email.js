@@ -8,12 +8,12 @@ import axios from "axios";
 import { withRouter } from "react-router-dom";
 
 const formStyle = {
-  padding: "10%",
+  padding: "7%",
   width: "100%",
   backgroundColor: "white",
   borderRadius: "10px",
-  paddingTop: "42%",
-  paddingBottom: "42%",
+  paddingTop: "35%",
+  paddingBottom: "35%",
 };
 
 class EmailLogin extends Component {
@@ -71,6 +71,7 @@ class EmailLogin extends Component {
     return (
       <div style={formStyle}>
         <Form onSubmit={this.handleSubmit}>
+        <h2 style={{ textAlign: "center" }}>OnTask</h2>
           <h4 style={{ textAlign: "center" }}>Login with Email</h4>
           <span style={{ color: "red", textAlign: "center" }}>
             {this.props.response}

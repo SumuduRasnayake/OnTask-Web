@@ -6,8 +6,9 @@ import axios from 'axios'
 import {withRouter} from 'react-router-dom'
 
 const formStyle = {
-  padding: "15%",
-  width: "100%",
+  padding: "6%",
+  paddingTop: "4%",
+  width: "60%",
   backgroundColor: "white"
 };
 
@@ -19,7 +20,7 @@ class EmailSignup extends Component{
     checked:false,
     CheckedError:false,
     Error:"",
-    success:"",
+    success:"If you have a smartphone, please sign up on mobile app",
     isSubmitting: false,
     fname: "",
     email: "",
@@ -41,7 +42,6 @@ class EmailSignup extends Component{
     evt.preventDefault()
     this.setState({isSubmitting: true})
     if(this.state.fname === "" || (this.state.fname && this.state.fname.length === 0)){
-      console.log("Hi")
       this.setState({FirstNameError:"First name is required",isSubmitting: false})
     }
     else if(this.state.email === "" || (this.state.email && this.state.email.length === 0)){
@@ -58,12 +58,6 @@ class EmailSignup extends Component{
     }
     else{
       const username = this.state.email.split('@')[0]
-      console.log({
-        fname: this.state.fname,
-        email: this.state.email,
-        username: username,
-        password: this.state.password
-      })
       axios.post('/auth/signup',{
         fname: this.state.fname,
         email: this.state.email,
@@ -81,11 +75,13 @@ class EmailSignup extends Component{
 
   render(){
     return (
-      // <div style={formStyle}>
           <Form onSubmit={this.handleSubmit} style={formStyle}>
-        <h4 style={{ textAlign: "center"}}>Sign up with Email</h4>
-        <Form.Text style={{textAlign: "center",color: "red"}}>{this.state.Error}</Form.Text>
-        <Form.Text style={{textAlign: "center",color: "green"}}>{this.state.success}</Form.Text>
+           <div style={{ textAlign: "center"}}>
+           <h2 >OnTask</h2>
+        <h4>Sign up with Email</h4>
+           </div>
+        <p style={{textAlign: "center",color: "red"}}>{this.state.Error}</p>
+        <p style={{textAlign: "center",color: "green"}}>{this.state.success}</p>
         <Form.Group>
           <label>First name</label>
           <Form.Control name="fname" onChange={this.handleChange}/>
@@ -100,15 +96,21 @@ class EmailSignup extends Component{
   
         <Form.Text style={{color: "red"}}>{this.state.PasswordError}</Form.Text>
         <Form.Row>
-         <Form.Group as={Col}>
+        <Col sm={12} md={6}>
+        <Form.Group >
           <label>Password</label>
             <Form.Control type="password" name="password" onChange={this.handleChange}/>
           </Form.Group>
-  
-          <Form.Group as={Col}>
+        </Col>
+        <Col sm={12} md={6}>
+        <Form.Group>
           <label></label>
             <Form.Control style={{marginTop: "2.5%"}} name="c_pass" onChange={this.handleChange} type="password" placeholder="confirm password"/>
           </Form.Group>
+        </Col>
+         
+  
+          
         </Form.Row>
   
         <Form.Group controlId="EmailCheck">
@@ -117,7 +119,7 @@ class EmailSignup extends Component{
     </Form.Group>
   
         <div style={{display: "flex",justifyContent: "center"}}>
-      <Button className="btns" type="submit" disabled={this.state.isSubmitting ? true : false}>
+      <Button className="btns" variant="success" type="submit" disabled={this.state.isSubmitting ? true : false}>
         {this.state.isSubmitting ? "Signing you up.." : "Create Account"}</Button>
       </div>
       </Form>

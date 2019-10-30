@@ -32,7 +32,7 @@ class GroupMemberItem extends Component {
       <ListGroupItem
         action
         style={{
-          padding: "1%",
+          padding: "2%",
           alignItems: "center",
           display: "flex",
           flexDirection: "row",
@@ -42,16 +42,16 @@ class GroupMemberItem extends Component {
           <img
             style={{ borderRadius: "50%" }}
             className="img-avatar"
-            width="20"
-            height="20"
+            width="35"
+            height="35"
             src={this.props.img}
             alt=""
           />
         ) : (
           <img
             className="img-avatar"
-            width="20"
-            height="20"
+            width="35"
+            height="35"
             src={
               "https://www.gravatar.com/avatar/" +
               this.props.emailHash +
@@ -68,7 +68,7 @@ class GroupMemberItem extends Component {
         </a>
         <div style={{ flexGrow: 1 }} />
         <UncontrolledDropdown
-          direction="right"
+          direction="down"
           style={{
             display: this.props.isAdmin ? "block" : "none",
             marginTop: "-1.5%",
@@ -82,6 +82,7 @@ class GroupMemberItem extends Component {
               onClick={this.makeMemberAdmin}
               style={{
                 display: this.props.m_role === "member" ? "block" : "none",
+                border: 0
               }}
             >
               Make admin
@@ -89,6 +90,7 @@ class GroupMemberItem extends Component {
             <DropdownItem
               style={{
                 display: this.props.m_role === "admin" ? "block" : "none",
+                border: 0
               }}
               onClick={this.removeFromAdmin}
             >

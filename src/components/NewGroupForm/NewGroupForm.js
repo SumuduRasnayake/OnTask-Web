@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import GroupForm from './GroupForm'
+import './newgroup.css'
 
 class NewGroupModal extends React.Component {
   constructor(props, context) {
@@ -37,6 +38,7 @@ class NewGroupModal extends React.Component {
           backdrop="static"
           {...this.props}
           size="lg"
+          dialogClassName="new_group_modal"
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >

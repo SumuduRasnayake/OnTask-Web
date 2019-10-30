@@ -12,7 +12,7 @@ const TaskItem = props => {
         <CardBody style={{padding: 0}}>
         <div className="text-muted"       style={{ cursor: "pointer" }} onClick={OnClick}>
         <h6 style={{margin: 0}}>{props.task.name}</h6>
-        <p style={{margin: 0}}>due {props.task.dueDate}</p>
+        <p style={{margin: 0}}>due <b>{props.task.dueDate}</b></p>
       </div>
       <div style={{ display: "flex", flexDirection: "row" }}>
       </div>
