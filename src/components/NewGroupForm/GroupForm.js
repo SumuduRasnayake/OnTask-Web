@@ -15,8 +15,8 @@ const GroupForm = props => {
   const { values, handleChange, handleSubmit } = useForm(createNewGroup);
   const groupMembers = [];
   const [trig,setTrig] = useState(true)
+  const [isSubmitting,setSubmitStatus] = useState(false)
   const [searchResults,setSearchResults] = useState([])
-  const [NOfChars, setNOfChars] = useState(160);
 
   const handleMemberSearch = e => {
     if(e.target.value){
@@ -59,6 +59,7 @@ const GroupForm = props => {
 
   function createNewGroup(e) {
     e.preventDefault();
+    setSubmitStatus(true)
     SENDER.post("/groups", {
       userId: localStorage.getItem('id'),
       name: values.name,
@@ -67,6 +68,7 @@ const GroupForm = props => {
     })
       .then(res => {
         if (res.status === 200) {
+          setSubmitStatus(false)
           props.handleClose();
           props.history.push('/groups/'+res.data)
           window.location.reload()
@@ -74,16 +76,10 @@ const GroupForm = props => {
       })
       .catch(err => {
         alert("There was an error.Please try again")
+        setSubmitStatus(false)
         console.log(err)
       });
   }
-
-  const handleDesChange = e => {
-    if (e.target.value.length === 160) {
-      e.preventDefault();
-    }
-    setNOfChars(160 - e.target.value.length);
-  };
 
   const handleKeyDown = event => {
     if (event.key === 'Enter' && event.shiftKey === false) {
@@ -93,8 +89,8 @@ const GroupForm = props => {
 
   return (
     <>
-      <Row>
-        <Col sm={6}>
+      {/* <Row>
+        <Col sm={6}> */}
           <Form onSubmit={handleSubmit} onKeyDown={e => { handleKeyDown(e) }}>
             <Form.Group>
               <label>Name</label>
@@ -108,14 +104,12 @@ const GroupForm = props => {
                 maxLength="160"
                 name="description"
                 rows={5}
-                onKeyPress={handleDesChange}
                 onChange={handleChange}
               />
-              <Form.Text>{NOfChars}/160 characters left</Form.Text>
             </Form.Group>
           </Form>
-        </Col>
-        <Col sm={6}>
+        {/* </Col> */}
+        {/* <Col sm={6}>
           <p style={{marginBottom: "2.5%"}}>
             <b>Add members</b>
           </p>
@@ -154,8 +148,8 @@ const GroupForm = props => {
               ></MemberSearchItem>
             })}
           </div>
-        </Col>
-      </Row>
+        </Col> */}
+      {/* </Row> */}
       <Modal.Footer>
       {/* eslint-disable-next-line */}
         <a
@@ -165,8 +159,8 @@ const GroupForm = props => {
         >
           Cancel
         </a>
-        <Button variant="success" onClick={createNewGroup}>
-          Create Group
+        <Button variant="success" disabled={isSubmitting} onClick={createNewGroup}>
+          {isSubmitting ? "Creating.." : "Create Group"}
         </Button>
       </Modal.Footer>
     </>

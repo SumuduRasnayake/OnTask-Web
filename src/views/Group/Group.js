@@ -152,19 +152,11 @@ class Group extends Component {
         />
         <Row>
           <Col xs="12" sm="12" lg="3" style={{ marginTop: "0.5%" }}>
-          <Card style={{marginBottom: "2%"}}>
-              <CardBody style={{ display: "flex", flexDirection: "column" }}>
-                <h5>{this.state.percentage ? this.state.percentage : 0 }% completed</h5>
-                <Progress
-                  className="progress-xs mt-2"
-                  color="success"
-                  value={this.state.percentage}
-                />
-              </CardBody>
-            </Card>
+    
             <GroupTasks 
               groupId={this.props.match.params.gid}
-              isAdmin={this.state.isAdmin} />
+              isAdmin={this.state.isAdmin}
+              groupName={this.state.groupData.name} />
           </Col>
 
           <Col xs="12" sm="12" lg="4" style={{ marginTop: "0.5%",paddingLeft: 0 }}>
@@ -211,7 +203,7 @@ class Group extends Component {
                   />
                 </div>
               </CardHeader>
-              <CardBody>
+              <CardBody style={{padding: "1%"}}>
                 <div
                   ref={this.groupDesc}
                   contentEditable={this.state.desEditable}
@@ -222,7 +214,7 @@ class Group extends Component {
                     borderRadius: "5px",
                   }}
                 >
-                  {this.state.description}
+                  {this.state.description ? this.state.description : <p style={{marginTop: "1%",color: "gray"}}>No description provided</p>}
                 </div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <Button

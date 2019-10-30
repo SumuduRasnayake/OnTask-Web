@@ -1,20 +1,16 @@
 import React, { Component } from "react";
 import {
-  Nav,
-  NavItem,
-  NavLink,
-  TabContent,
   Card,
-  CardBody,
-  TabPane
+  CardBody
 } from "reactstrap";
-import BasicInfoSettings from "./BasicInfoSettings";
-import WebPresenceSettings from "./WebPresenceSettings";
-import ContactInfoSettings from "./ContactInfoSettings";
-import WorkSettings from "./WorkSettings";
-import EducationSettings from "./EducationSettings";
+import Tabs from "react-bootstrap/Tabs";
+import Tab from "react-bootstrap/Tab";
+import BasicInfoSettings from "./EditProfile/BasicInfoSettings";
+import WebPresenceSettings from "./EditProfile/WebPresenceSettings";
+import ContactInfoSettings from "./EditProfile/ContactInfoSettings";
+import WorkSettings from "./EditProfile/WorkSettings";
+import EducationSettings from "./EditProfile/EducationSettings";
 import PropTypes from "prop-types";
-import classNames from "classnames";
 import UserProfile from "./UserProfile";
 
 const propTypes = {
@@ -27,20 +23,11 @@ class ProfilePane extends Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: "1",
       trigger: false,
       editEnabled: false,
+      key: "profile",
     };
-  }
-
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab,
-      });
-    }
   }
 
   componentDidMount() {
@@ -69,83 +56,63 @@ class ProfilePane extends Component {
     const { children, ...attributes } = this.props;
 
     return (
-      <React.Fragment>
-        <Nav tabs>
-          <NavItem>
-            <NavLink
-              className={classNames({ active: this.state.activeTab === "1" })}
-              onClick={() => {
-                this.toggle("1");
-              }}
-            >
-              {/* <i className="icon-list"></i> */}
-              Profile
-            </NavLink>
-          </NavItem>
+      <Card style={{ padding: "1%" }}>
+        <CardBody style={{ padding: 0 }}>
+          <Tabs
+            id="controlled-tab-example"
+            activeKey={this.state.key}
+            onSelect={k => this.setState({ key: k })}
+          >
+            <Tab eventKey="profile" title="Profile">
+              <UserProfile id={this.props.id} trigger={this.state.trigger} />
+            </Tab>
+            <Tab eventKey="edit" title={this.state.editEnabled ? "Edit profile & settings" : ""} style={{display: this.state.editEnabled ? "block" : "none"}}>
+              <Card>
+                <CardBody>
+                  <BasicInfoSettings
+                    id={localStorage.getItem("id")}
+                    onUpdate={this.triggerUpdate}
+                  />
+                </CardBody>
+              </Card>
 
-          <NavItem>
-            <NavLink
-              style={{ display: this.state.editEnabled ? "block" : "none" }}
-              className={classNames({ active: this.state.activeTab === "3" })}
-              onClick={() => {
-                this.toggle("3");
-              }}
-            >
-              {/* <i className="icon-settings"></i> */}
-              <p style={{ margin: 0 }}>Edit Profile & Settings</p>
-            </NavLink>
-          </NavItem>
-        </Nav>
-        <TabContent activeTab={this.state.activeTab}>
-          <TabPane tabId="1">
-            <UserProfile id={this.props.id} trigger={this.state.trigger} />
-          </TabPane>
-          <TabPane tabId="3" className="p-3">
-            <Card>
-              <CardBody>
-                <BasicInfoSettings 
-                  id={localStorage.getItem("id")}
-                  onUpdate={this.triggerUpdate}/>
-              </CardBody>
-            </Card>
+              <Card>
+                <CardBody>
+                  <ContactInfoSettings onUpdate={this.triggerUpdate} />
+                </CardBody>
+              </Card>
 
-            <Card>
-              <CardBody>
-                <ContactInfoSettings 
-                  onUpdate={this.triggerUpdate}
-                />
-              </CardBody>
-            </Card>
+              <Card>
+                <CardBody>
+                  <WebPresenceSettings
+                    id={localStorage.getItem("id")}
+                    onUpdate={this.triggerUpdate}
+                  />
+                </CardBody>
+              </Card>
 
-            <Card>
-              <CardBody>
-                <WebPresenceSettings
-                  id={localStorage.getItem("id")}
-                  onUpdate={this.triggerUpdate}
-                />
-              </CardBody>
-            </Card>
+              <Card>
+                <CardBody>
+                  <WorkSettings
+                    id={localStorage.getItem("id")}
+                    onUpdate={this.triggerUpdate}
+                  />
+                </CardBody>
+              </Card>
 
-            <Card>
-              <CardBody>
-                <WorkSettings
-                  id={localStorage.getItem("id")}
-                  onUpdate={this.triggerUpdate}
-                />
-              </CardBody>
-            </Card>
-
-            <Card>
-              <CardBody>
-                <EducationSettings
-                  id={localStorage.getItem("id")}
-                  onUpdate={this.triggerUpdate}
-                />
-              </CardBody>
-            </Card>
-          </TabPane>
-        </TabContent>
-      </React.Fragment>
+              <Card>
+                <CardBody>
+                  <EducationSettings
+                    id={localStorage.getItem("id")}
+                    onUpdate={this.triggerUpdate}
+                  />
+                </CardBody>
+              </Card>
+            </Tab>
+         
+          </Tabs>
+        </CardBody>
+      </Card>
     );
   }
 }

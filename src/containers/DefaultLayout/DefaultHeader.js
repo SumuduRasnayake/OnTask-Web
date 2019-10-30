@@ -4,6 +4,8 @@ import NewGroupForm from "../../components/NewGroupForm";
 import pusher from "../../utils/PusherObject";
 import UserNotification from "./UserNotification";
 import SENDER from "../../utils/SENDER";
+import Dropdown from 'react-bootstrap/Dropdown'
+import DropdownButton from 'react-bootstrap/DropdownButton'
 import {
   Badge,
   UncontrolledDropdown,
@@ -48,7 +50,6 @@ class DefaultHeader extends Component {
   markNotificationAsSeen(id){
     SENDER.post("/notifications/"+id+"/seen").then(
       res => {
-        alert("seen")
         this.setState(prevState => ({
           noOfNotis: prevState.noOfNotis ? prevState.noOfNotis - 1 : prevState.noOfNotis,
           notifications: prevState.notifications.filter( notification => notification.n_id !== id)
@@ -84,7 +85,7 @@ class DefaultHeader extends Component {
     return (
       <React.Fragment>
         <AppNavbarBrand
-          full={{ src: logo, width: 55, height: 45, alt: "OnTask" }}
+          full={{ src: logo, width: 80, height: 75, alt: "OnTask" }}
           href="/dashboard"
         />
 
@@ -101,7 +102,7 @@ class DefaultHeader extends Component {
             <DropdownMenu left="true">
               {this.state.groups.map(group => {
                 return (
-                  <DropdownItem key={group.groupId}>
+                  <DropdownItem key={group.groupId} style={{border: 0}}>
                     <a
                       href={"/groups/" + group.groupId}
                       style={{ textDecoration: "none", color: "black" }}
@@ -113,7 +114,6 @@ class DefaultHeader extends Component {
               })}
             </DropdownMenu>
           </UncontrolledDropdown>
-          
         </Nav>
         <Nav className="ml-auto" navbar style={{  }}>
           <NewGroupForm />
@@ -125,7 +125,7 @@ class DefaultHeader extends Component {
                   {this.state.noOfNotis}
                 </Badge>
               </DropdownToggle>
-              <DropdownMenu right={true}>
+              <DropdownMenu>
                 {this.state.notifications.length > 0 ? this.state.notifications.map(notification => {
                   const n_id = notification.n_id ? notification.n_id : notification.id
                   return (
@@ -137,7 +137,7 @@ class DefaultHeader extends Component {
                       createdAt={notification.createdAt || notification.activity.createdAt}
                     />
                   );
-                }) : <div style={{textAlign: "center",padding: "4%"}}>No New Notifications</div>}
+                }) : <div style={{display: "flex",alignItems: "center",justifyContent: "center",height: "15vh",padding: "6%"}}>No New Notifications</div>}
               </DropdownMenu>
             </UncontrolledDropdown>
           </NavItem>
@@ -155,8 +155,8 @@ class DefaultHeader extends Component {
                 <img className="img-avatar" src={"https://www.gravatar.com/avatar/"+this.state.propic.emailHash+"?d=retro&s=50"} alt=""/>
               )}
             </DropdownToggle>
-            <DropdownMenu right={true}>
-              <DropdownItem>
+            <DropdownMenu style={{pasition: "absolute",top: 50,left: -130}}>
+              <DropdownItem style={{border: "none"}}>
                 <i className="fa fa-dashboard" />
                 <Link
                   to={"/"}
@@ -165,7 +165,7 @@ class DefaultHeader extends Component {
                   Dashboard
                 </Link>{" "}
               </DropdownItem>
-              <DropdownItem>
+              <DropdownItem style={{border: "none"}}>
                 <i className="fa fa-user" />
                 <Link
                   to={"/users/" + localStorage.getItem("id")}
@@ -174,7 +174,7 @@ class DefaultHeader extends Component {
                   Profile
                 </Link>{" "}
               </DropdownItem>
-              <DropdownItem onClick={e => this.props.onLogout(e)}>
+              <DropdownItem style={{border: "none"}} onClick={e => this.props.onLogout(e)}>
                 <i className="fa fa-lock" /> Logout
               </DropdownItem>
             </DropdownMenu>
