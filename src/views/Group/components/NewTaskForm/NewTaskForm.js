@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form'
-import SENDER from '../../utils/SENDER'
+import SENDER from '../../../../utils/SENDER'
 
 class NewTaskForm extends React.Component {
   constructor(props, context) {
@@ -64,7 +64,7 @@ class NewTaskForm extends React.Component {
   render() {
     return (
       <>
-        <i onClick={this.handleShow} style={{cursor: "pointer",display: this.props.isAdmin ? "block" : "none"}} className="fa fa-plus float-right"></i>
+        <i onClick={this.handleShow} style={{cursor: "pointer",display: this.props.isAdmin ? "block" : "none",verticalAlign: "middle"}} className="fa fa-plus float-right"></i>
 
         <Modal show={this.state.show} onHide={this.handleClose} backdrop="static">
           <Modal.Header closeButton>
@@ -85,7 +85,7 @@ class NewTaskForm extends React.Component {
 
               <Form.Group controlId="startDate">
                 <Form.Label>Start date</Form.Label>
-                <Form.Control type="date" name="startDate" defaultValue={this.state.startDate}/>
+                <Form.Control type="date" name="startDate" min={new Date().toJSON().slice(0,10)} defaultValue={this.state.startDate}/>
               </Form.Group>
 
               <Form.Group controlId="dueDate">
