@@ -1,11 +1,13 @@
 import React,{ useState,useEffect} from "react";
 import {  Input, Form, Button } from "reactstrap";
-import SENDER from "../../utils/SENDER";
-import useForm from "../../utils/useForm";
+import SENDER from "../../../utils/SENDER";
+import useForm from "../../../utils/useForm";
 
 const WebPresenceSettings = props => {
   const { values, handleChange, handleSubmit } = useForm(updateWebPresence);
   const [userData,setUserData] = useState([])
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
   function updateWebPresence(e) {
     e.preventDefault()
@@ -16,9 +18,14 @@ const WebPresenceSettings = props => {
     )
       .then(res => {
         props.onUpdate()
-        alert("Web presence updated");
+        setErrMsg("")
+        setSuccessMsg("Updated successfully.");
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        setSuccessMsg("")
+        setErrMsg("An error occured. Please try again.")
+        console.log(err)
+      });
   }
   
   useEffect(() => {
@@ -33,7 +40,10 @@ const WebPresenceSettings = props => {
   return (
     <>
       <h5>Web Presence</h5>
-
+      <div style={{display: successMsg || errMsg ? "block" : "none"}}>
+        <p style={{display: successMsg ? "block" : "none",color: "green"}}>{successMsg}</p>
+        <p style={{display: errMsg ? "block" : "none",color: "red"}}>{errMsg}</p>
+      </div>
       <Form onSubmit={handleSubmit}>
         website link
         <Input

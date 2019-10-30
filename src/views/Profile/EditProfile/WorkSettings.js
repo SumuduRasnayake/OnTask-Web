@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import useForm from '../../utils/useForm'
+import useForm from '../../../utils/useForm'
 import { Row, Col, Input, Form, FormGroup, Label } from "reactstrap";
-import SENDER from '../../utils/SENDER'
+import SENDER from '../../../utils/SENDER'
 
 const WorkSettings = () => {
   const [isFormVisible,setFormVisible] = useState(false)
   const [isWorking,setIsWorking] = useState(false)
   const {values,handleChange,handleSubmit} = useForm(addNewWorkPlace)
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
   function handleIsWorking(event){
     setIsWorking(event.target.checked)
@@ -25,10 +27,16 @@ const WorkSettings = () => {
       alert("Please complete relevant fields")
     }
     else{
-      console.log(data)
       SENDER.post('/user/work',data).then(
-        res => alert("work added")
-    ).catch(err => console.log(err))
+        res => {
+          setErrMsg("")
+          setSuccessMsg("Updated successfully.");
+        }
+    ).catch(err => {
+      setSuccessMsg("")
+        setErrMsg("An error occured. Please try again.")
+        console.log(err)
+      })
     }
   }
 
@@ -36,6 +44,10 @@ const WorkSettings = () => {
     <>
       <div style={{display: "flex",flexDirection: "row"}}>
         <h5>Work</h5>
+        <div style={{display: successMsg || errMsg ? "block" : "none"}}>
+        <p style={{display: successMsg ? "block" : "none",color: "green"}}>{successMsg}</p>
+        <p style={{display: errMsg ? "block" : "none",color: "red"}}>{errMsg}</p>
+      </div>
         <div style={{flexGrow: 1}} />
         <p style={{cursor: "pointer",color: "blue"}} onClick={() => setFormVisible(!isFormVisible)}>{isFormVisible ? "Hide Form" : "Add new workplace"}</p>
       </div>

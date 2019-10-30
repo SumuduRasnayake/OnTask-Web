@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import useForm from '../../utils/useForm'
+import useForm from '../../../utils/useForm'
 import { Row, Col, Input, Form, FormGroup, Label } from "reactstrap";
-import EducationItem from './EducationItem'
-import SENDER from '../../utils/SENDER'
+import EducationItem from '../components/EducationItem'
+import SENDER from '../../../utils/SENDER'
 
 const EducationSettings = () => {
   const [isFormVisible,setFormVisible] = useState(false)
   const [isStudying,setIsStudying] = useState(false)
   const [education,setEducation] = useState([])
   const {values,handleChange,handleSubmit} = useForm(addEducation)
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
   function addEducation(){
     let data = {}
@@ -18,10 +20,16 @@ const EducationSettings = () => {
         data.description = values.description
         data.to = values.to
         data.isStudying = isStudying
-    console.log(data)
     SENDER.post('/user/education',data).then(
-        res => alert("education added")
-    ).catch(err => console.log(err))
+        res => {
+          setErrMsg("")
+          setSuccessMsg("Updated successfully.");
+        }
+    ).catch(err => {
+      setSuccessMsg("")
+        setErrMsg("An error occured. Please try again.")
+      console.log(err) 
+    })
   }
 
   function handleCheckBox(e){
@@ -31,8 +39,6 @@ const EducationSettings = () => {
     () => {
       SENDER.get('/users/'+localStorage.getItem('id')+'/education').then(
         res => {
-          console.log("Education: ")
-          console.log(res.data)
           setEducation(res.data)
         })
     },[]
@@ -42,6 +48,10 @@ const EducationSettings = () => {
     <>
       <div style={{display: "flex",flexDirection: "row"}}>
         <h5>Education</h5>
+        <div style={{display: successMsg || errMsg ? "block" : "none"}}>
+        <p style={{display: successMsg ? "block" : "none",color: "green"}}>{successMsg}</p>
+        <p style={{display: errMsg ? "block" : "none",color: "red"}}>{errMsg}</p>
+      </div>
         <div style={{flexGrow: 1}} />
         <p style={{cursor: "pointer",color: "blue"}} onClick={() => setFormVisible(!isFormVisible)}>{isFormVisible ? "Hide Form" : "Add new Education"}</p>
       </div>

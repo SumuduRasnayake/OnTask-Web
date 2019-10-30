@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Form, Input, Button } from "reactstrap";
-import SENDER from "../../utils/SENDER";
-import useForm from "../../utils/useForm";
+import SENDER from "../../../utils/SENDER";
+import useForm from "../../../utils/useForm";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import ReactMarkdown from "react-markdown";
@@ -11,9 +11,10 @@ const BasicInfoSettings = props => {
   const [userData,setUserData] = useState([])
   const [username, setUsername] = useState("");
   const [usernameDuplicateError, setUsernameDuplicateError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
   function updateBasicInfo() {
-    console.log(values);
     let basicUserData = values;
     basicUserData["username"] = username ? username : null;
     SENDER.post(
@@ -22,17 +23,20 @@ const BasicInfoSettings = props => {
     )
       .then(res => {
         props.onUpdate()
-        alert("basic info updated");
+        setErrMsg("")
+        setSuccessMsg("Updated successfully.");
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        setSuccessMsg("")
+        setErrMsg("An error occured. Please try again.")
+        console.log(err)
+      });
   }
 
   const validateUsername = e => {
     e.persist()
     SENDER.get("/users/exist/" + e.target.value)
       .then(res => {
-        console.log("Validated: ")
-        console.log(res.data)
         if (res.data) {
           setUsername(e.target.value);
           setUsernameDuplicateError("")
@@ -45,8 +49,6 @@ const BasicInfoSettings = props => {
 
   useEffect(() => {
     SENDER.get("/users/" + localStorage.getItem("id")).then(res => {
-      console.log("User data: ");
-      console.log(res.data);
       setUserData(res.data)
       //values = res.data
     });
@@ -55,6 +57,10 @@ const BasicInfoSettings = props => {
   return (
     <>
       <h5>Basic Info</h5>
+      <div style={{display: successMsg || errMsg ? "block" : "none"}}>
+        <p style={{display: successMsg ? "block" : "none",color: "green"}}>{successMsg}</p>
+        <p style={{display: errMsg ? "block" : "none",color: "red"}}>{errMsg}</p>
+      </div>
       <Form onSubmit={handleSubmit}>
         <Row>
           <Col>
