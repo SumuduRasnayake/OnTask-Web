@@ -15,7 +15,7 @@ const Page404 = React.lazy(() => import('./views/Page404'));
 const Page500 = React.lazy(() => import('./views/Page500'));
 const Group = React.lazy(() => import('./views/Group'));
 
-axios.defaults.baseURL='http://localhost:8080/api'
+axios.defaults.baseURL= process.env.NODE_ENV === "production" ? " https://ontask-back.herokuapp.com/api" :'http://localhost:8080/api'
 
 class App extends Component {
 
