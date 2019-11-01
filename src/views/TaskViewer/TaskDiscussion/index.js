@@ -1,9 +1,9 @@
 import React, { useState, useEffect} from "react";
-import SENDER from "../../utils/SENDER";
+import SENDER from "../../../utils/SENDER";
 import { Card, CardHeader, CardBody } from "reactstrap";
 import CommentBox from "./CommentBox";
 import Comment from './Comment'
-import pusher from '../../utils/PusherObject'
+import pusher from '../../../utils/PusherObject'
 
 const TaskDiscussion = props => {
   const [comments, setComments] = useState([]);
@@ -32,7 +32,7 @@ const TaskDiscussion = props => {
         <i className="icon-speech" />
         <b>Discussion</b>
       </CardHeader>
-      <CardBody style={{ padding: 0,height: "65vh",overflowY: "auto",paddingTop: "1%" }}>
+      <CardBody style={{ padding: 0,overflowY: "auto",paddingTop: "1%" }}>
       {comments.length > 0 ? comments.map(comment => {
           return (
             <Comment

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Tabs from "react-bootstrap/Tabs";
-import SENDER from "../../utils/SENDER";
+import SENDER from "../../../utils/SENDER";
 import { Input, Button } from "reactstrap";
 import Tab from "react-bootstrap/Tab";
 import ReactMarkdown from "react-markdown";

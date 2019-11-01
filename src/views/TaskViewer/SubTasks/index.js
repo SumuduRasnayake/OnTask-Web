@@ -1,6 +1,6 @@
 import React,{ useState, useEffect} from 'react'
-import useForm from '../../utils/useForm'
-import SENDER from '../../utils/SENDER'
+import useForm from '../../../utils/useForm'
+import SENDER from '../../../utils/SENDER'
 import { Card,CardHeader,CardBody,Form,Input,Button,ListGroup} from 'reactstrap'
 import SubTaskItem from './SubTaskItem'
 import { Checklist } from "styled-icons/octicons/Checklist";

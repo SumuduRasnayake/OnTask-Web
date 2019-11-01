@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input,ListGroupItem } from 'reactstrap'
-import SENDER from '../../utils/SENDER'
+import SENDER from '../../../utils/SENDER'
 
 const SubTaskItem = props => {
 
