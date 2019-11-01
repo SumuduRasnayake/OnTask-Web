@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import Modal from "react-bootstrap/Modal";
 import { withRouter} from 'react-router-dom'
 import TaskAsignee from "../../components/TaskAsignee";
-import TaskDiscussion from "../../components/TaskDiscussion";
-import SubTasks from "../../components/SubTasks";
+import TaskDiscussion from "./TaskDiscussion"
+import SubTasks from "./SubTasks";
 import TaskActivity from "./TaskActivity"
 import SENDER from "../../utils/SENDER";
 import { Clock } from "styled-icons/feather/Clock";
@@ -185,7 +185,7 @@ const TaskViewer = props => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Row style={{ marginTop: "0.5%" }}>
+           <Row style={{ marginTop: "0.5%" }}>
             <Col xs="12" sm="12" lg="3">
             <Card style={{border: 0,padding: 0}}>
                 <CardBody>
@@ -223,8 +223,8 @@ const TaskViewer = props => {
               </Card>
               
               
-              <Card>
-                <CardHeader>
+              <Card className="border-0">
+                <CardHeader style={{backgroundColor: "white"}}>
                   <File size={20} />
                   <b>Resources</b>
                   <div className="card-header-actions">
@@ -248,6 +248,7 @@ const TaskViewer = props => {
                         key={resource.taskResId}
                         src={resource.uri}
                         name={resource.uri.split("/")[5].replace(/%20/g, "_")}
+                        type={resource.uri.split(".")[1]}
                         addedBy={resource.username}
                         cdate={resource.addedOn.slice(0, 10)}
                       />
@@ -304,7 +305,7 @@ const TaskViewer = props => {
             <SubTasks isAdmin={props.isAdmin} isAssigned={props.isAssigned} taskId={props.taskId} sendSubTaskStats={getSubTaskStats}/> 
             <TaskDiscussion taskId={props.taskId} />
             </Col>
-          </Row>
+          </Row> 
         </Modal.Body>
       </Modal>
     </>

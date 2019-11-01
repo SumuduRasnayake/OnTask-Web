@@ -1,13 +1,42 @@
-import React from 'react'
-import { ListGroupItem } from 'reactstrap'
+import React from "react";
+import { ListGroupItem } from "reactstrap";
+import getFileTypeIcon from "../utils/FileTypeIcon";
 
-const TaskResItem = props => {
-    return(
-        <ListGroupItem action style={{padding: "1%"}} tag="a" href={props.src}>
-            <h6><b>{props.name}</b></h6>
-            <h6 style={{fontSize: "0.9em"}}>added by <b>{props.addedBy}</b> on <b>{props.cdate}</b></h6>
-            </ListGroupItem>
-    )
+const styles = {
+    container: { display: "flex", flexDirection: "row" },
+    imageContainer: {
+        display: "flex",
+        flexDirection: "row",
+        height: "5vh",
+        alignItems: "center",
+        marginLeft: "0%",
+        marginRight: "2%",
+      }
 }
 
-export default TaskResItem
+const TaskResItem = props => {
+  return (
+    <ListGroupItem
+      action
+      style={styles.container}
+      tag="a"
+      href={props.src}
+    >
+      <div
+        style={styles.imageContainer}
+      >
+        {getFileTypeIcon(props.type)}
+      </div>
+      <div>
+        <h6 style={{margin: 0}}>
+          <b>{`${props.name.slice(0,30)}...`}</b>
+        </h6>
+        <p>
+          added by <b>{props.addedBy}</b> on <b>{props.cdate}</b>
+        </p>
+      </div>
+    </ListGroupItem>
+  );
+};
+
+export default TaskResItem;
