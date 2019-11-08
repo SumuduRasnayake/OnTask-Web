@@ -8,16 +8,14 @@ const GroupActivityItem = props => {
   var htmlToReactParser = new HtmlToReactParser();
 
   return (
-    <Card style={{ margin: 0 }}>
-      <CardBody style={{ padding: "2%" }}>
-        <h6 style={{ margin: 0 }}>
+    <div style={{paddingBottom: "2%"}}>
+              <h6 style={{ margin: 0 }}>
           {htmlToReactParser.parse(props.description)}
         </h6>
         <p style={{ margin: 0 }}>
           {moment(new Date(props.createdAt)).fromNow()}
         </p>
-      </CardBody>
-    </Card>
+    </div>
   );
 };
 

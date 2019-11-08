@@ -35,6 +35,7 @@ class GroupMemberItem extends Component {
           padding: "2%",
           alignItems: "center",
           display: "flex",
+          border: "none",
           flexDirection: "row",
         }}
       >

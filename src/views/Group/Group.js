@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import pusher from "../../utils/PusherObject";
-import GroupTasks from './components/GroupTasks'
+import GroupTasks from "./components/GroupTasks";
 import GroupActivityItem from "../../components/ActivityItem";
 import RequireAuth from "../../utils/PrivateRoute";
 import GroupHeader from "./components/GroupHeader";
 
 import SENDER from "../../utils/SENDER";
 
-import GroupMembers from './components/GroupMembers'
+import GroupMembers from "./components/GroupMembers";
 
 import {
   Progress,
@@ -112,20 +112,12 @@ class Group extends Component {
       })
       .catch(err => console.log(err));
 
-  
-
-    
-
     SENDER.get("/notices/group/" + this.props.match.params.gid)
       .then(res => {
         this.setState({ notices: res.data });
       })
       .catch(err => console.log(err));
-
-
   }
-
-  
 
   updateTaskList = () => {
     SENDER.get("/" + this.props.match.params.gid + "/tasks")
@@ -152,36 +144,45 @@ class Group extends Component {
         />
         <Row>
           <Col xs="12" sm="12" lg="3" style={{ marginTop: "0.5%" }}>
-    
-            <GroupTasks 
+            <GroupTasks
               groupId={this.props.match.params.gid}
               isAdmin={this.state.isAdmin}
-              groupName={this.state.groupData.name} />
+              groupName={this.state.groupData.name}
+            />
           </Col>
 
-          <Col xs="12" sm="12" lg="4" style={{ marginTop: "0.5%",paddingLeft: 0 }}>
-            <Card style={{ margin: 0 }}>
-              <CardHeader>
-                <b>Group Activity</b>
-                <div className="card-header-actions" />
-              </CardHeader>
-              <CardBody style={{ padding: 0 }}>
-                {this.state.groupActivities.length > 0 ? (
-                  this.state.groupActivities.map(activity => (
-                    <GroupActivityItem
-                      description={activity.description.split("in group")[0].trim()}
-                      key={activity.id}
-                      createdAt={activity.createdAt}
-                    />
-                  ))
-                ) : (
-                  <></>
-                )}
-              </CardBody>
-            </Card>
+          <Col
+            xs="12"
+            sm="12"
+            lg="4"
+            style={{ marginTop: "0.5%", paddingLeft: 0 }}
+          >
+            <div>
+              <h5>Group Activity</h5>
+            </div>
+            <CardBody style={{ padding: 0 }}>
+              {this.state.groupActivities.length > 0 ? (
+                this.state.groupActivities.map(activity => (
+                  <GroupActivityItem
+                    description={activity.description
+                      .split("in group")[0]
+                      .trim()}
+                    key={activity.id}
+                    createdAt={activity.createdAt}
+                  />
+                ))
+              ) : (
+                <></>
+              )}
+            </CardBody>
           </Col>
 
-          <Col xs="12" sm="6" lg="3" style={{marginTop: "0.5%", paddingLeft: 0 }}>
+          <Col
+            xs="12"
+            sm="6"
+            lg="3"
+            style={{ marginTop: "0.5%", paddingLeft: 0 }}
+          >
             <Card
               style={{
                 padding: "1%",
@@ -203,18 +204,24 @@ class Group extends Component {
                   />
                 </div>
               </CardHeader>
-              <CardBody style={{padding: "1%"}}>
+              <CardBody style={{ padding: "1%" }}>
                 <div
                   ref={this.groupDesc}
                   contentEditable={this.state.desEditable}
                   style={{
                     border: this.state.desEditable ? "1px solid gray" : "none",
-                    padding: this.state.desEditable ? "4%" : 0,
+                    padding: this.state.desEditable ? "4%" : "2%",
                     textAlign: "justify",
                     borderRadius: "5px",
                   }}
                 >
-                  {this.state.description ? this.state.description : <p style={{marginTop: "1%",color: "gray"}}>No description provided</p>}
+                  {this.state.description ? (
+                    this.state.description
+                  ) : (
+                    <p style={{ marginTop: "1%", color: "gray" }}>
+                      No description provided
+                    </p>
+                  )}
                 </div>
                 <div style={{ display: "flex", flexDirection: "row" }}>
                   <Button
@@ -294,9 +301,10 @@ class Group extends Component {
           </Col>
 
           <Col xs="12" sm="6" lg="2" style={{ padding: 0 }}>
-            <GroupMembers 
-              isAdmin={this.state.isAdmin} 
-              groupId={this.props.match.params.gid}/>
+            <GroupMembers
+              isAdmin={this.state.isAdmin}
+              groupId={this.props.match.params.gid}
+            />
           </Col>
         </Row>
       </div>

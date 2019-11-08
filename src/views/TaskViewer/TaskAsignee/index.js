@@ -1,9 +1,9 @@
 import React,{ useState, useEffect} from 'react'
-import SENDER from '../../utils/SENDER'
+import SENDER from '../../../utils/SENDER'
 import { Card,CardHeader,CardBody,Input,ListGroup} from 'reactstrap'
 import TaskAsigneeItem from './TaskAsigneeItem'
-import { Checklist } from "styled-icons/octicons/Checklist";
-import MemberSearchItem from "../MemberSearchItem";
+import { User } from "styled-icons/boxicons-regular/User";
+import MemberSearchItem from "../../../components/MemberSearchItem";
 
 const SubTasks = props => {
     const [isExpanded,setIsExpanded] = useState(false)
@@ -54,10 +54,10 @@ const SubTasks = props => {
       },[trig,props.taskId]
     )
     return (
-        <Card>
+        <Card style={{border: "none"}}>
                 <CardHeader>
-                  <Checklist size={20} />
-                  <b>Asignees</b>
+                  <User size={20} />
+                  <b>Assignees</b>
                   <div className="card-header-actions">
                     <i
                       style={{

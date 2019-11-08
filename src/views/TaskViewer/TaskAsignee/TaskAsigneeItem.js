@@ -1,7 +1,7 @@
 import React from "react";
 import { ListGroupItem } from "reactstrap";
 import { Minus } from "styled-icons/boxicons-regular/Minus";
-import SENDER from "../../utils/SENDER";
+import SENDER from "../../../utils/SENDER";
 
 const TaskAsigneeItem = props => {
   function removeAsignee() {
@@ -23,6 +23,7 @@ const TaskAsigneeItem = props => {
         flexDirection: "row",
         alignItems: "center",
         minHeight: "4vh",
+        border: "none"
       }}
     >
       {props.propic ? (
