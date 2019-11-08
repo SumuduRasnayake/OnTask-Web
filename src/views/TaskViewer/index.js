@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import Modal from "react-bootstrap/Modal";
 import { withRouter} from 'react-router-dom'
-import TaskAsignee from "../../components/TaskAsignee";
+import TaskAsignee from "./TaskAsignee";
 import TaskDiscussion from "./TaskDiscussion"
+import TaskResources from "./TaskResources"
 import SubTasks from "./SubTasks";
 import TaskActivity from "./TaskActivity"
 import SENDER from "../../utils/SENDER";
 import { Clock } from "styled-icons/feather/Clock";
-import TaskResItem from "../../components/TaskResItem";
-import { File } from "styled-icons/boxicons-regular/File";
 import { Description } from "styled-icons/material/Description";
 import { Microsoft } from 'styled-icons/boxicons-logos/Microsoft'
 import { Tick} from 'styled-icons/typicons/Tick'
@@ -23,21 +22,12 @@ const TaskViewer = props => {
   const [show, setShow] = useState(false);
   const [subtaskTotal, setSubtaskTotal] = useState(1);
   const [percentage,setPercentage] = useState(0)
-  const TaskResUploader = useRef(null);
-
-  //The following P is just used to refresh the UI after uploding a file.
-  const [p, setP] = useState(true);
 
   const [description, setDescription] = useState("");
   const [task, setTask] = useState([]);
-  const [resources, setResources] = useState([]);
   const [desEditable, setDesEditable] = useState(false);
   const [EditTaskInfo, setEditTaskInfo] = useState(false);
   const desc = useRef(null);
-
-  const showOpenFileDlg = () => {
-    TaskResUploader.current.click();
-  };
 
   function deleteTask(){
     if(window.confirm("All task data will be permanently deleted.Continue?")){
@@ -48,27 +38,6 @@ const TaskViewer = props => {
         }
       ).catch(err => console.log(err))
     }
-  }
-
-  function fileChangedHandler(event) {
-    let formData = new FormData();
-    formData.append("file", event.target.files[0]);
-    formData.append("name", event.target.files[0].name.replace(/(|)/g,"_"));
-
-    SENDER.post(
-      "/task_resources/" +
-        parseInt(localStorage.getItem("id")) +
-        "/" +
-        parseInt(props.taskId),
-      formData
-    )
-      .then(res => {
-        if (res.status === 200) {
-          alert("uploaded successfully");
-          setP(false);
-        }
-      })
-      .catch(err => alert("err"));
   }
 
   function handleDesChange() {
@@ -100,7 +69,6 @@ const TaskViewer = props => {
         date: e.target.value
     }).then(
       res => {
-        setP(!p)
         setEditTaskInfo(false)
       } 
     ).catch(
@@ -138,17 +106,9 @@ const TaskViewer = props => {
         setTask(res.data);
         setDescription(res.data.description);
       })
-      .catch(err => console.log(err));
-
-    SENDER.get("/task_resources/" + props.taskId)
-      .then(res => {
-        console.log(res.data);
-        setResources(res.data);
-      })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
     
-    
-  }, [props.i,p,props.taskId]);
+  }, [props.i,props.taskId]);
 
   return (
     <>
@@ -156,7 +116,6 @@ const TaskViewer = props => {
         size="lg"
         show={show}
         onHide={closeModal}
-        //style={{ height: "90vh" }}
         backdrop="static"
         dialogClassName="task_viewer_modal"
         aria-labelledby="contained-modal-title-vcenter"
@@ -222,44 +181,11 @@ const TaskViewer = props => {
                 </CardBody>
               </Card>
               
-              
-              <Card className="border-0">
-                <CardHeader style={{backgroundColor: "white"}}>
-                  <File size={20} />
-                  <b>Resources</b>
-                  <div className="card-header-actions">
-                    <i
-                      style={{ cursor: "pointer" }}
-                      className="fa fa-plus float-right"
-                      onClick={showOpenFileDlg}
-                    />
-                    <input
-                      ref={TaskResUploader}
-                      onChange={fileChangedHandler}
-                      type="file"
-                      style={{ display: "none" }}
-                    />
-                  </div>
-                </CardHeader>
-                <CardBody style={{ padding: 0 }}>
-                  {resources.map(resource => {
-                    return (
-                      <TaskResItem
-                        key={resource.taskResId}
-                        src={resource.uri}
-                        name={resource.uri.split("/")[5].replace(/%20/g, "_")}
-                        type={resource.uri.split(".")[1]}
-                        addedBy={resource.username}
-                        cdate={resource.addedOn.slice(0, 10)}
-                      />
-                    );
-                  })}
-                </CardBody>
-              </Card>
-              
+              <TaskResources taskId={props.taskId} />              
+
               <TaskAsignee isAdmin={props.isAdmin} taskId={props.taskId} groupId={props.groupId}/>
             </Col>
-            <Col xs="12" sm="12" lg="5" style={{  }}>
+            <Col xs="12" sm="12" lg="5">
               <Card>
                 <CardHeader>
                   <Description size={20} />

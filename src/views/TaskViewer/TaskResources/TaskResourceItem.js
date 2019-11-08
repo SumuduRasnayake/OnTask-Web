@@ -1,6 +1,6 @@
 import React from "react";
 import { ListGroupItem } from "reactstrap";
-import getFileTypeIcon from "../utils/FileTypeIcon";
+import getFileTypeIcon from "../../../utils/FileTypeIcon";
 
 const styles = {
     container: { display: "flex", flexDirection: "row" },
