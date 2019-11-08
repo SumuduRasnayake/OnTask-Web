@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 
 const CommentBox = props => {
   const [input, setInput] = useState("");
+  const [isSubmitting,setSubmitStatus] = useState(false)
 
   function handleChange(e) {
     setInput(e.target.value);
@@ -14,6 +15,8 @@ const CommentBox = props => {
 
   function postComment(event) {
     event.preventDefault();
+    props.setError("")
+    setSubmitStatus(true)
     SENDER.post("/comments", {
       taskId: props.taskId,
       content: input,
@@ -21,10 +24,14 @@ const CommentBox = props => {
     })
       .then(res => {
         if (res.status === 200) {
-          
+          setSubmitStatus(false)
         }
       })
-      .catch(err => console.log("Comment Error : " + err));
+      .catch(err => {
+        props.setError("")
+        setSubmitStatus(false)
+        console.log("Comment Error : " + err)
+      });
   }
 
   return (

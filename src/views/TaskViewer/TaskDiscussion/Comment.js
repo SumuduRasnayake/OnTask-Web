@@ -1,25 +1,45 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card'
 import ReactMarkdown from 'react-markdown'
+import moment from "moment";
 
 const Comment = props => {
-    const CreatedDateFields = new Date(props.createdAt).toString().split(' ')
-    //alert(CreatedDateFields.slice(1,4))
 
-    const createdDate = CreatedDateFields.slice(1,4).toString().replace(/,/,"")
-    const createdTime = CreatedDateFields[4]
+    const fromNow =  moment(new Date(props.createdAt)).fromNow()
 
     return (
-        <Card style={{marginTop: "1%",marginBottom: "1%",height: "15vh"}}>
-            <Card.Header>
-                <p style={{margin: 0}}><b>{props.fname}</b> commented on {createdDate} at {createdTime}
-                </p>
-                {/* commented on {props.createdAt.slice(0,10)} at {props.createdAt.slice(12,19)} */}
-            </Card.Header>
-              <Card.Body style={{padding: "1% 0% 1% 4%"}}>
-              <ReactMarkdown source={props.content} />
-              </Card.Body>
-          </Card>
+        <div style={{display: "flex",flexDirection: "row"}}>
+            <div style={{marginRight: "1%"}}>
+            {props.img ? (
+          <img
+            style={{ borderRadius: "50%" }}
+            className="img-avatar"
+            width="25"
+            height="25"
+            src={props.img}
+            alt=""
+          />
+        ) : (
+          <img
+            className="img-avatar"
+            width="25"
+            height="25"
+            src={
+              "https://www.gravatar.com/avatar/" +
+              props.emailHash +
+              "?d=retro&s=25"
+            }
+            alt=""
+          />
+        )}
+            </div>
+            <div>
+            <p style={{margin: 0}}><b>{props.fname}</b> &#xB7; {fromNow}</p>
+            <div >
+            <ReactMarkdown source={props.content} />
+            
+</div>
+            </div>
+        </div>
     );
 };
 

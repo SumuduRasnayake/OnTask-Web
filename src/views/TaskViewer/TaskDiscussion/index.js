@@ -7,6 +7,11 @@ import pusher from '../../../utils/PusherObject'
 
 const TaskDiscussion = props => {
   const [comments, setComments] = useState([]);
+  const [error,setError] = useState("");
+
+  function setCommentError(err){
+    setError(err)
+  }
 
   function addComments(data){
     SENDER.get("/comments/" + parseInt(props.taskId))
@@ -21,6 +26,7 @@ const TaskDiscussion = props => {
   useEffect(() => {
     SENDER.get("/comments/" + parseInt(props.taskId))
       .then(res => {
+        console.log("comments: ",res.data)
         setComments(res.data);
       })
       .catch(err => console.log(err));
@@ -33,17 +39,20 @@ const TaskDiscussion = props => {
         <b>Discussion</b>
       </CardHeader>
       <CardBody style={{ padding: 0,overflowY: "auto",paddingTop: "1%" }}>
+  <p style={{textAlign: "center",color: "red"}}>{error}</p>
       {comments.length > 0 ? comments.map(comment => {
           return (
             <Comment
               key={comment.id}
+              emailHash={comment.emailHash}
+              img={comment.propicURL}
               content={comment.content}
               createdAt={comment.createdAt}
               fname={comment.fname}
             />
           );
         }): <h6 style={{textAlign: "left",color: "gray",paddingTop: "1%"}}>Be the first to post a comment</h6>}
-        <CommentBox taskId={props.taskId} />
+        <CommentBox taskId={props.taskId} setError={setCommentError}/>
       </CardBody>
     </Card>
   );
