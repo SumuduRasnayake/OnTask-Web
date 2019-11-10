@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
-
+import Logo from "../../assets/img/brand/logo.PNG";
 import Button from "react-bootstrap/Button";
 
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 
 const formStyle = {
-  padding: "15%",
-  width: "80%",
+  padding: "10%",
+  marginTop: "12%",
+  width: "100%",
+  height: "70vh",
   backgroundColor: "white",
 };
 
@@ -61,7 +63,10 @@ class EmailForm extends Component {
   render() {
     return (
       <Form onSubmit={this.handleSubmit} style={formStyle}>
-        <h4 style={{ textAlign: "center" }}>Reset Your Password</h4>
+                 <div style={{display: "flex",justifyContent: "center"}}>
+                 <img src={Logo} alt="" height="100" width="100" />
+                 </div>
+        <h5 style={{ textAlign: "center",marginTop: "2%",marginBottom: "2%" }}>Reset Your Password</h5>
         <Form.Text style={{ textAlign: "center", color: "red" }}>
           {this.state.error}
         </Form.Text>

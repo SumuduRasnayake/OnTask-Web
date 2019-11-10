@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import {Row,Col,Card,
   CardBody} from 'reactstrap'
-import Logo from '../../assets/img/brand/logo.PNG' 
 import MobileLogin from './components/mobile'
 import EmailLogin from './components/email'
 import { withRouter } from 'react-router-dom'
@@ -45,12 +44,10 @@ class Login extends Component{
   render(){
     return (
       <div style={{minHeight: "100vh",backgroundColor: "#1FDC75"}}>
-        <div style={{display: "flex",justifyContent: "left"}}>
-        
-      </div>
-      <Row style={{margin: 0,marginTop: 60}}>
+       
+      <Row style={{margin: 0}}>
           <Col xs="12" sm="12" lg="9" className="p-2" style={{paddingRight: 0}}>
-          <Card style={{height: "80vh",}}>
+          <Card style={{height: "90vh",marginTop: "2.5%"}}>
                     <CardBody>
                     <MobileLogin />
                     </CardBody>
@@ -58,7 +55,7 @@ class Login extends Component{
           </Col>
 
           <Col xs="12" sm="12" lg="3" className="p-2">
-          <Card style={{height: "80vh",paddingLeft: 0}}>
+          <Card style={{height: "90vh",marginTop: "8%"}}>
           
                     <CardBody>
                     <EmailLogin history={this.props.history}/>

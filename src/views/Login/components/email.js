@@ -1,19 +1,17 @@
+//imports from NPM packages
 import React, { Component } from "react";
-import {
-  Form,
-  Button,
-} from "react-bootstrap";
-
+import { Form, Button } from "react-bootstrap";
 import axios from "axios";
-import { withRouter } from "react-router-dom";
+import { withRouter,Link } from "react-router-dom";
+
+//import logo
+import Logo from "../../../assets/img/brand/logo.PNG";
 
 const formStyle = {
-  padding: "7%",
   width: "100%",
   backgroundColor: "white",
   borderRadius: "10px",
-  paddingTop: "35%",
-  paddingBottom: "35%",
+  paddingTop: "30%",
 };
 
 class EmailLogin extends Component {
@@ -22,6 +20,7 @@ class EmailLogin extends Component {
     password: "",
     EmailError: "",
     PasswordError: "",
+    loginError: "",
     isDisabled: false,
   };
 
@@ -38,7 +37,7 @@ class EmailLogin extends Component {
     ) {
       this.setState({ PasswordError: "Please enter password" });
     } else {
-      this.setState({isDisabled: true})
+      this.setState({ isDisabled: true, loginError: "" });
       axios
         .post("/auth/signin", {
           email: this.state.email,
@@ -56,9 +55,8 @@ class EmailLogin extends Component {
           }
         })
         .catch(err => {
-          alert("There was an error.Please try again");
-          console.log(err);
-          this.setState({isDisabled: false})
+          this.setState({ loginError: "Invalid attempt. Please try again" });
+          this.setState({ isDisabled: false });
         });
     }
   };
@@ -71,11 +69,19 @@ class EmailLogin extends Component {
     return (
       <div style={formStyle}>
         <Form onSubmit={this.handleSubmit}>
-        <h2 style={{ textAlign: "center" }}>OnTask</h2>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "2%",
+            }}
+          >
+            <img src={Logo} alt="" height="100" width="100" />
+          </div>
           <h4 style={{ textAlign: "center" }}>Login with Email</h4>
-          <span style={{ color: "red", textAlign: "center" }}>
-            {this.props.response}
-          </span>
+          <p style={{ color: "red", textAlign: "center" }}>
+            {this.state.loginError}
+          </p>
           <Form.Group>
             <label>Email Address</label>
             <Form.Control
@@ -90,7 +96,7 @@ class EmailLogin extends Component {
 
           <Form.Group>
             <label>
-              Password <a href="/forgot-password">Forgot password?</a>
+              Password <Link to="/forgot-password">Forgot password?</Link>
             </label>
             <Form.Control
               type="password"
@@ -103,7 +109,12 @@ class EmailLogin extends Component {
           </Form.Group>
 
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <Button variant="success" style={{width: "100%"}} type="submit" disabled={this.state.isDisabled}>
+            <Button
+              variant="success"
+              style={{ width: "100%" }}
+              type="submit"
+              disabled={this.state.isDisabled}
+            >
               {this.state.isDisabled ? "Logging you in" : "Log in"}
             </Button>
           </div>

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col } from "reactstrap";
 import {Link} from 'react-router-dom'
-import Logo from "../../assets/img/brand/logo.PNG";
 import "react-tabs/style/react-tabs.css";
 import { withRouter } from "react-router-dom";
 import EmailSignup from "./email";

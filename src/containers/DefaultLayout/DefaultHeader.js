@@ -85,7 +85,7 @@ class DefaultHeader extends Component {
     return (
       <React.Fragment>
         <AppNavbarBrand
-          full={{ src: logo, width: 80, height: 75, alt: "OnTask" }}
+          full={{ src: logo, width: 50, height: 50, alt: "OnTask" }}
           href="/dashboard"
         />
 
